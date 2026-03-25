@@ -1,0 +1,38 @@
+aid: developerhub
+name: DeveloperHub
+description: >-
+  DeveloperHub is a hosted developer documentation platform for creating API
+  references, guides, and knowledge bases with built-in versioning and search.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Documentation
+  - Developer Portals
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/developerhub/refs/heads/main/apis.yml
+created: '2026-03-25'
+modified: '2026-03-25'
+specificationVersion: '0.19'
+apis:
+  - aid: developerhub:developerhub
+    name: DeveloperHub
+    description: >-
+      DeveloperHub is a hosted developer documentation platform for creating API
+      references, guides, and knowledge bases with built-in versioning and search.
+    humanURL: https://developerhub.io
+    tags:
+      - Documentation
+      - Developer Portals
+    properties:
+      - type: Documentation
+        url: https://docs.developerhub.io
+      - type: Getting Started
+        url: https://docs.developerhub.io/getting-started
+common:
+  - type: Website
+    url: https://developerhub.io
+  - type: Documentation
+    url: https://docs.developerhub.io
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
