@@ -10,9 +10,9 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Documentation
-  - Developer Portals
   - API Reference
+  - Developer Portals
+  - Documentation
   - Knowledge Base
 url: >-
   https://raw.githubusercontent.com/api-evangelist/developerhub/refs/heads/main/apis.yml
@@ -29,10 +29,10 @@ apis:
       pipelines for keeping API references up to date.
     humanURL: https://developerhub.io
     tags:
-      - Documentation
-      - Developer Portals
       - API Reference
       - Content Management
+      - Developer Portals
+      - Documentation
     properties:
       - type: Documentation
         url: https://docs.developerhub.io
@@ -50,8 +50,8 @@ apis:
       domains and branding.
     humanURL: https://developerhub.io
     tags:
-      - Documentation
       - Developer Portals
+      - Documentation
       - Knowledge Base
       - OpenAPI
     properties:
