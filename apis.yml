@@ -17,29 +17,9 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/developerhub/refs/heads/main/apis.yml
 created: '2026-03-25'
-modified: '2026-03-25'
+modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
-  - aid: developerhub:api
-    name: DeveloperHub API
-    description: >-
-      The DeveloperHub API allows programmatic access to manage documentation
-      projects, pages, categories, and versions. It enables automation of
-      documentation workflows, content publishing, and integration with CI/CD
-      pipelines for keeping API references up to date.
-    humanURL: https://developerhub.io
-    tags:
-      - API Reference
-      - Content Management
-      - Developer Portals
-      - Documentation
-    properties:
-      - type: Documentation
-        url: https://docs.developerhub.io
-      - type: Getting Started
-        url: https://docs.developerhub.io/getting-started
-      - type: OpenAPI
-        url: https://docs.developerhub.io/api-reference
   - aid: developerhub:platform
     name: DeveloperHub Documentation Platform
     description: >-
@@ -59,6 +39,12 @@ apis:
         url: https://docs.developerhub.io
       - type: Features
         url: https://developerhub.io/features
+      - type: API Editor
+        url: https://app.developerhub.io/api-editor
+      - type: Community
+        url: https://talk.developerhub.io
+      - type: Status
+        url: https://status.developerhub.io
 common:
   - type: Website
     url: https://developerhub.io
