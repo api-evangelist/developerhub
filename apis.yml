@@ -43,7 +43,7 @@ apis:
         url: https://app.developerhub.io/api-editor
       - type: Community
         url: https://talk.developerhub.io
-      - type: Status
+      - type: StatusPage
         url: https://status.developerhub.io
 common:
   - type: Website
@@ -56,13 +56,13 @@ common:
     url: https://developerhub.io/blog
   - type: Login
     url: https://app.developerhub.io
-  - type: Sign Up
+  - type: SignUp
     url: https://app.developerhub.io/signup
   - type: Support
     url: https://developerhub.io/contact
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://developerhub.io/privacy
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://developerhub.io/terms
 maintainers:
   - FN: Kin Lane
