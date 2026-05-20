@@ -46,6 +46,10 @@ apis:
       - type: StatusPage
         url: https://status.developerhub.io
 common:
+  - type: GitHubOrganization
+    url: https://github.com/developerhub-io
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/developer-hub
   - type: Website
     url: https://developerhub.io
   - type: Documentation
