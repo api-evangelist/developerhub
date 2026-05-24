@@ -68,6 +68,8 @@ common:
     url: https://developerhub.io/privacy
   - type: TermsOfService
     url: https://developerhub.io/terms
+  - type: LLMsTxt
+    url: https://docs.developerhub.io/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
