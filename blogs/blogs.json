@@ -2,12 +2,20 @@
   "repo": "developerhub",
   "feeds": [
     {
-      "source": "https://developerhub.io/blog",
+      "source": "https://developerhub.io/blog/feed/",
       "feed_url": "https://developerhub.io/blog/feed/",
-      "title": "DeveloperHub.io",
-      "saved": 14
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://developerhub.io/pricing",
+      "feed_url": "https://developerhub.io/pricing",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 24,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
