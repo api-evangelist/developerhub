@@ -1,0 +1,395 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeveloperHub.io API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.developerhub.io/api/v1/documentation/:id/page",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Documentation (section) ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a page"
+        },
+        {
+          "info": {
+            "name": "Retrieve page by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/page",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve page by slug"
+        },
+        {
+          "info": {
+            "name": "Read page details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/page/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Read page details"
+        },
+        {
+          "info": {
+            "name": "Update a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/page/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a page"
+        },
+        {
+          "info": {
+            "name": "Delete a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.developerhub.io/api/v1/page/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a page"
+        },
+        {
+          "info": {
+            "name": "Publish a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/page/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Publish a page"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Documentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List documentation sections for a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/version/:versionId/documentation",
+            "params": [
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List documentation sections for a version"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all project versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/version"
+          },
+          "docs": "List all project versions"
+        },
+        {
+          "info": {
+            "name": "Update a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/version/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a version"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "References",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Read API reference definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/reference/:id/definition",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Read API reference definition"
+        },
+        {
+          "info": {
+            "name": "Publish API reference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/reference/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Publish API reference"
+        },
+        {
+          "info": {
+            "name": "Add or update API reference for a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.developerhub.io/api/v1/version/:versionId/reference",
+            "params": [
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add or update API reference for a version"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Project",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get project users and roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/users"
+          },
+          "docs": "Get project users and roles"
+        },
+        {
+          "info": {
+            "name": "Search project content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search project content"
+        },
+        {
+          "info": {
+            "name": "Retrieve all resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/all"
+          },
+          "docs": "Retrieve all resources"
+        },
+        {
+          "info": {
+            "name": "Query audit log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/audit"
+          },
+          "docs": "Query audit log"
+        },
+        {
+          "info": {
+            "name": "Export project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/export"
+          },
+          "docs": "Export project"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reader Access",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get invited readers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/reader-access"
+          },
+          "docs": "Get invited readers"
+        },
+        {
+          "info": {
+            "name": "Grant reader access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.developerhub.io/api/v1/reader-access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grant reader access"
+        },
+        {
+          "info": {
+            "name": "Revoke reader access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.developerhub.io/api/v1/reader-access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke reader access"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
