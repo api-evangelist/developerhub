@@ -60,7 +60,7 @@ common:
     url: https://developerhub.io/blog
   - type: Login
     url: https://app.developerhub.io
-  - type: SignUp
+  - type: Signup
     url: https://app.developerhub.io/signup
   - type: Support
     url: https://developerhub.io/contact
@@ -68,7 +68,7 @@ common:
     url: https://developerhub.io/privacy
   - type: TermsOfService
     url: https://developerhub.io/terms
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.developerhub.io/llms.txt
 maintainers:
   - FN: Kin Lane
