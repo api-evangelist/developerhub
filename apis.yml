@@ -46,6 +46,12 @@ apis:
       - type: StatusPage
         url: https://status.developerhub.io
 common:
+  - type: VulnerabilityDisclosure
+    url: security/developerhub-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/developerhub-domain-security.yml
+  - type: Authentication
+    url: authentication/developerhub-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/developerhub-io
   - type: LinkedIn
