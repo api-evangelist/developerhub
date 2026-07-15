@@ -46,6 +46,8 @@ apis:
       - type: StatusPage
         url: https://status.developerhub.io
 common:
+  - type: AgenticAccess
+    url: agentic-access/developerhub-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/developerhub-vulnerability-disclosure.yml
   - type: DomainSecurity
