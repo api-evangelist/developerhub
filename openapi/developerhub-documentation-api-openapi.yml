@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  title: DeveloperHub.io Documentation API
+  description: 'REST API for the DeveloperHub.io developer documentation platform. Programmatically
+
+    manage documentation projects, pages, versions, API references, reader access, and
+
+    audit data. Authentication uses an X-Api-Key header generated from the DeveloperHub
+
+    platform.
+
+    '
+  version: 1.0.0
+  contact:
+    name: DeveloperHub
+    url: https://docs.developerhub.io
+servers:
+- url: https://api.developerhub.io/api/v1
+  description: DeveloperHub API v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: Documentation
+paths:
+  /version/{versionId}/documentation:
+    get:
+      summary: List documentation sections for a version
+      operationId: listDocumentation
+      tags:
+      - Documentation
+      parameters:
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Documentation sections
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Documentation'
+components:
+  schemas:
+    Documentation:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        order:
+          type: integer
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
