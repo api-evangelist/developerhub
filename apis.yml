@@ -8,7 +8,20 @@ description: >-
   DeveloperHub provides a complete developer portal solution with support for
   multiple documentation projects, custom branding, and SEO optimization.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/developerhub.png
 tags:
   - API Reference
   - Developer Portals
@@ -20,31 +33,83 @@ created: '2026-03-25'
 modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
-  - aid: developerhub:platform
-    name: DeveloperHub Documentation Platform
-    description: >-
-      DeveloperHub provides a hosted platform for creating developer
-      documentation including API references auto-generated from OpenAPI
-      specs, user guides with a WYSIWYG editor, versioned documentation,
-      full-text search, and customizable developer portals with custom
-      domains and branding.
-    humanURL: https://developerhub.io
-    tags:
-      - Developer Portals
-      - Documentation
-      - Knowledge Base
-      - OpenAPI
-    properties:
-      - type: Documentation
-        url: https://docs.developerhub.io
-      - type: Features
-        url: https://developerhub.io/features
-      - type: API Editor
-        url: https://app.developerhub.io/api-editor
-      - type: Community
-        url: https://talk.developerhub.io
-      - type: StatusPage
-        url: https://status.developerhub.io
+- aid: developerhub:platform
+  name: DeveloperHub Documentation Platform
+  description: >-
+    DeveloperHub provides a hosted platform for creating developer documentation including API references
+    auto-generated from OpenAPI specs, user guides with a WYSIWYG editor, versioned documentation, full-text
+    search, and customizable developer portals with custom domains and branding.
+  humanURL: https://developerhub.io
+  tags:
+  - Developer Portals
+  - Documentation
+  - Knowledge Base
+  - OpenAPI
+  properties:
+  - type: Documentation
+    url: https://docs.developerhub.io
+  - type: Features
+    url: https://developerhub.io/features
+  - type: API Editor
+    url: https://app.developerhub.io/api-editor
+  - type: Community
+    url: https://talk.developerhub.io
+  - type: StatusPage
+    url: https://status.developerhub.io
+- aid: developerhub:developerhub-documentation-api
+  name: DeveloperHub Documentation API
+  description: The Documentation API from DeveloperHub — 1 operation(s) for documentation.
+  humanURL: https://developerhub.io
+  tags:
+  - Documentation
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-documentation-api-openapi.yml
+- aid: developerhub:developerhub-pages-api
+  name: DeveloperHub Pages API
+  description: The Pages API from DeveloperHub — 4 operation(s) for pages.
+  humanURL: https://developerhub.io
+  tags:
+  - Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-pages-api-openapi.yml
+- aid: developerhub:developerhub-project-api
+  name: DeveloperHub Project API
+  description: The Project API from DeveloperHub — 5 operation(s) for project.
+  humanURL: https://developerhub.io
+  tags:
+  - Project
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-project-api-openapi.yml
+- aid: developerhub:developerhub-reader-access-api
+  name: DeveloperHub Reader Access API
+  description: The Reader Access API from DeveloperHub — 1 operation(s) for reader access.
+  humanURL: https://developerhub.io
+  tags:
+  - Reader Access
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-reader-access-api-openapi.yml
+- aid: developerhub:developerhub-references-api
+  name: DeveloperHub References API
+  description: The References API from DeveloperHub — 3 operation(s) for references.
+  humanURL: https://developerhub.io
+  tags:
+  - References
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-references-api-openapi.yml
+- aid: developerhub:developerhub-versions-api
+  name: DeveloperHub Versions API
+  description: The Versions API from DeveloperHub — 2 operation(s) for versions.
+  humanURL: https://developerhub.io
+  tags:
+  - Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-versions-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/developerhub-agentic-access.yml
