@@ -1,0 +1,24 @@
+{
+  "provider": "developerhub",
+  "sources": [
+    "developerhub-documentation-api-openapi.yml",
+    "developerhub-pages-api-openapi.yml",
+    "developerhub-project-api-openapi.yml",
+    "developerhub-reader-access-api-openapi.yml",
+    "developerhub-references-api-openapi.yml",
+    "developerhub-versions-api-openapi.yml"
+  ],
+  "outputs": [
+    "developerhub-documentation-api-openapi.yml",
+    "developerhub-pages-api-openapi.yml",
+    "developerhub-project-api-openapi.yml",
+    "developerhub-reader-access-api-openapi.yml",
+    "developerhub-references-api-openapi.yml",
+    "developerhub-versions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
