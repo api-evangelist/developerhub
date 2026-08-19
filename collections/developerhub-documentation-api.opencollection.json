@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeveloperHub.io Documentation API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Documentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List documentation sections for a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/version/:versionId/documentation",
+            "params": [
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List documentation sections for a version"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

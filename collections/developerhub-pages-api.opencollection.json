@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeveloperHub.io Documentation Pages API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.developerhub.io/api/v1/documentation/:id/page",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Documentation (section) ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a page"
+        },
+        {
+          "info": {
+            "name": "Retrieve page by slug",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/page",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve page by slug"
+        },
+        {
+          "info": {
+            "name": "Read page details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/page/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Read page details"
+        },
+        {
+          "info": {
+            "name": "Update a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/page/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a page"
+        },
+        {
+          "info": {
+            "name": "Delete a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.developerhub.io/api/v1/page/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a page"
+        },
+        {
+          "info": {
+            "name": "Publish a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/page/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Publish a page"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

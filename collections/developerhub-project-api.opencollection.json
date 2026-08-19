@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeveloperHub.io Documentation Project API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Project",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get project users and roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/users"
+          },
+          "docs": "Get project users and roles"
+        },
+        {
+          "info": {
+            "name": "Search project content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Search project content"
+        },
+        {
+          "info": {
+            "name": "Retrieve all resources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/all"
+          },
+          "docs": "Retrieve all resources"
+        },
+        {
+          "info": {
+            "name": "Query audit log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/audit"
+          },
+          "docs": "Query audit log"
+        },
+        {
+          "info": {
+            "name": "Export project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/export"
+          },
+          "docs": "Export project"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeveloperHub.io Documentation Versions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all project versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/version"
+          },
+          "docs": "List all project versions"
+        },
+        {
+          "info": {
+            "name": "Update a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/version/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a version"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

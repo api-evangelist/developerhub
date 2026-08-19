@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeveloperHub.io Documentation Reader Access API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reader Access",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get invited readers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/reader-access"
+          },
+          "docs": "Get invited readers"
+        },
+        {
+          "info": {
+            "name": "Grant reader access",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.developerhub.io/api/v1/reader-access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grant reader access"
+        },
+        {
+          "info": {
+            "name": "Revoke reader access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.developerhub.io/api/v1/reader-access",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke reader access"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

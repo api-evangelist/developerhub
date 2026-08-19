@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "DeveloperHub.io Documentation References API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Api-Key",
+      "value": "{{X-Api-Key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "References",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Read API reference definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.developerhub.io/api/v1/reference/:id/definition",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Read API reference definition"
+        },
+        {
+          "info": {
+            "name": "Publish API reference",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.developerhub.io/api/v1/reference/:id/publish",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Publish API reference"
+        },
+        {
+          "info": {
+            "name": "Add or update API reference for a version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.developerhub.io/api/v1/version/:versionId/reference",
+            "params": [
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add or update API reference for a version"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
