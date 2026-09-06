@@ -1,0 +1,111 @@
+generated: '2026-09-06'
+method: probed
+source: live GET of the named /.well-known/ paths on every host this record knows
+note: >-
+  Probed the registrable domain, www, the API host from servers[], the docs host, the app/console
+  host, and ai.developerhub.io (named as the Editor MCP endpoint host in the provider's own docs).
+  Only ai.developerhub.io serves real documents: the RFC 8414 authorization-server metadata and the
+  RFC 9728 protected-resource metadata that back the OAuth flow on the Editor MCP server. The 200s
+  recorded on docs.developerhub.io and app.developerhub.io are the single-page-application catch-all
+  shell (identical 18,717 / 18,636 byte HTML for every path) and are NOT documents — they are counted
+  as misses here and earn no pointer.
+hosts:
+- host: developerhub.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: www.developerhub.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: api.developerhub.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: docs.developerhub.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/api-catalog
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+- host: app.developerhub.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/api-catalog
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    note: SPA shell HTML, not a document — treated as a miss
+- host: ai.developerhub.io
+  note: >-
+    The Editor MCP endpoint host, named at
+    https://docs.developerhub.io/support-center/editor-mcp-server
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: developerhub-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: developerhub-oauth-protected-resource.json
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+security_txt:
+  served: false
+  note: >-
+    No /.well-known/security.txt on any host. DeveloperHub does publish a responsible-disclosure
+    contact (security@developerhub.io) in prose at https://developerhub.io/security — captured in
+    security/developerhub-vulnerability-disclosure.yml — but not as an RFC 9116 document.

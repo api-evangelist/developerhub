@@ -19,6 +19,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "developerhub-documentation-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "developerhub-pages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "developerhub-project-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "developerhub-reader-access-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "developerhub-references-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "developerhub-versions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

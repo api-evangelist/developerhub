@@ -1,0 +1,95 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  openapi/_original/developerhub-openapi.yml (4xx responses and components.schemas), enriched from
+  live unauthenticated responses observed against https://api.developerhub.io/api/v1 on 2026-09-06
+provider: DeveloperHub
+providerId: developerhub
+format: vendor-json
+rfc9457: false
+note: >-
+  DeveloperHub does not use application/problem+json. Errors are application/json with a vendor
+  envelope carrying an HTTP code and an internal code that is usually — but not always — the same
+  number. There is no documented error-code reference page; the catalogue below is everything the
+  contract and the live surface actually state.
+envelope:
+  canonical: '{"error":{"message":"...","httpCode":<int>,"code":<int>}}'
+  variant: >-
+    The `Error` schema used by the 400 response is flat ({"message","httpCode","code"}), but live
+    400s return the nested shape.
+  fields:
+  - name: error.message
+    type: string
+    description: Human-readable message. Not stable; do not branch on it.
+  - name: error.httpCode
+    type: integer
+    description: The HTTP status code, repeated in the body.
+  - name: error.code
+    type: integer
+    description: Internal error code. Usually equal to httpCode; 429 is the exception (9).
+problem_types:
+- status: 400
+  schema: Error
+  title: General Exception
+  internal_code: 400
+  operations_declaring: 9
+  remediation: >-
+    Check the request body against the operation schema. An invalid API key also returns 400, with
+    internal code 0 and the message "API Key is invalid".
+  observed:
+  - request: GET /version with an invalid X-Api-Key
+    body: '{"error":{"message":"API Key is invalid","httpCode":400,"code":0}}'
+    internal_code: 0
+- status: 403
+  schema: AccessDenied
+  title: Access denied
+  internal_code: 403
+  operations_declaring: 25
+  remediation: >-
+    Supply a valid X-Api-Key for the project, and check the key carries the permission the operation
+    needs (for example changelog.edit for create_changelog_post). A missing key also returns 403.
+  observed:
+  - request: GET /version with no X-Api-Key
+    body: '{"error":{"message":"No API Key was provided. Read our API Reference at https://docs.developerhub.io/api","httpCode":403,"code":403}}'
+- status: 404
+  schema: Error
+  title: Draft not found
+  internal_code: 404
+  operations_declaring: 1
+  operations:
+  - read_reference_definition
+  remediation: >-
+    The reference has no draft specification. Upload one with add_reference before reading the draft.
+  note: >-
+    Only read_reference_definition declares a 404, but the API returns a 404 envelope for any unknown
+    route — GET https://api.developerhub.io/openapi.json returns
+    '{"error":{"message":"Not found","httpCode":404,"code":404}}'.
+- status: 415
+  schema: UnsupportedContentType
+  title: Unsupported content-type
+  internal_code: 415
+  operations_declaring: 8
+  example_message: "Unsupported content-type 'form'. Supported content-type is 'application/json'."
+  remediation: >-
+    Send application/json. The single exception is add_reference, which takes multipart/form-data.
+- status: 429
+  schema: TooManyRequests
+  title: Too many requests
+  internal_code: 9
+  operations_declaring: 25
+  example_message: You exceeded the rate limit
+  remediation: >-
+    Back off until the X-RateLimit-Reset unix timestamp. No Retry-After header is returned. Each
+    operation has its own budget — see rate-limits/developerhub-rate-limits.yml.
+coverage:
+  operations_total: 25
+  operations_with_4xx: 25
+  distinct_statuses: 5
+  statuses:
+  - 400
+  - 403
+  - 404
+  - 415
+  - 429
+  server_errors_declared: 0
+  note: No 5xx response is declared on any operation.

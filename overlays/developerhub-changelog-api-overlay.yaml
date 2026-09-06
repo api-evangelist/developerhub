@@ -1,0 +1,46 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — DeveloperHub.io Changelog API
+  version: 1.0.0
+extends: developerhub-changelog-api-openapi.yml
+x-generated: '2026-09-06'
+x-method: generated
+x-source: derived from the operation descriptions in the extended document; no content invented
+actions:
+- target: $.info
+  description: Attach the provider API reference as externalDocs and record the harvest source.
+  update:
+    x-apis-io-source: https://docs.developerhub.io/api.md
+    x-apis-io-harvested: '2026-09-06'
+- target: $
+  description: Add externalDocs pointing at the provider API reference.
+  update:
+    externalDocs:
+      description: DeveloperHub API reference
+      url: https://docs.developerhub.io/api/ref
+- target: $.paths['/changelog/{id}/post'].post
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 10800
+      window: 1 hour
+      scope: api-key
+      source: operation description
+- target: $.paths['/changelog/{id}/post'].post
+  description: Lift the API-key permission stated in the operation description into a machine-readable
+    extension.
+  update:
+    x-required-permission: changelog.edit
+- target: $.paths['/changelog/{id}/post'].get
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 600
+      window: 60 seconds
+      scope: api-key
+      source: operation description
+- target: $.paths['/changelog/{id}/post'].get
+  description: Lift the API-key permission stated in the operation description into a machine-readable
+    extension.
+  update:
+    x-required-permission: changelog.read

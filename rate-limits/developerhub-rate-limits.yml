@@ -3,89 +3,307 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: DeveloperHub
 providerId: developerhub
+generated: '2026-09-06'
+method: searched
+source: https://docs.developerhub.io/api/ref (machine-readable copy at https://docs.developerhub.io/api.md)
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
 tags:
-  - API Reference
-  - Developer Portals
-  - Documentation
-  - Knowledge Base
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the DeveloperHub API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+- API Reference
+- Developer Portals
+- Documentation
+- Knowledge Base
+- Rate Limiting
+- Quotas
+- Throttling
+description: Published rate limits for the DeveloperHub.io v1 REST API. Every one of the 25 operations
+  in the provider's own OpenAPI 1.1.0 states its own limit in its description, and every 2xx response
+  declares the three X-RateLimit-* headers. Limits are per API key and per operation; there is no published
+  per-plan rate table, and DeveloperHub gates capability by plan rather than by request rate. This file
+  replaces a 2026-05-04 scaffold whose tier limits were invented.
 headers:
   limit: X-RateLimit-Limit
   remaining: X-RateLimit-Remaining
   reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+headerSemantics:
+  X-RateLimit-Limit: 'Requests permitted until reset time (example: 300)'
+  X-RateLimit-Remaining: 'Requests consumed in current period (example: 253)'
+  X-RateLimit-Reset: 'Unix timestamp at which requests consumed will reset (example: 1611530395)'
+headersObserved: declared in components.headers of the provider OpenAPI and referenced by every 2xx response
+retryAfter: null
+retryAfterNote: No Retry-After header is documented; clients back off using X-RateLimit-Reset.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+throttledBody:
+  shape: '{"error":{"message":"You exceeded the rate limit","httpCode":429,"code":9}}'
+  schema: TooManyRequests
+  internalCode: 9
+limit_count: 25
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - DeveloperHub Documentation Platform
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - DeveloperHub Documentation Platform
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - DeveloperHub Documentation Platform
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - DeveloperHub Documentation Platform
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - DeveloperHub Documentation Platform
+- name: get_page (GET /page)
+  scope: api-key
+  operationId: get_page
+  method: GET
+  path: /page
+  metric: requests
+  limit: 60
+  window: 1 minute
+  windowMinutes: 1
+  source: openapi operation description (provider-published)
+- name: read_page (GET /page/{id})
+  scope: api-key
+  operationId: read_page
+  method: GET
+  path: /page/{id}
+  metric: requests
+  limit: 600
+  window: 1 minute
+  windowMinutes: 1
+  source: openapi operation description (provider-published)
+- name: update_page (PUT /page/{id})
+  scope: api-key
+  operationId: update_page
+  method: PUT
+  path: /page/{id}
+  metric: requests
+  limit: 10800
+  window: 1 hour
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: delete_page (DELETE /page/{id})
+  scope: api-key
+  operationId: delete_page
+  method: DELETE
+  path: /page/{id}
+  metric: requests
+  limit: 10800
+  window: 1 hour
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: create_page (POST /documentation/{id}/page)
+  scope: api-key
+  operationId: create_page
+  method: POST
+  path: /documentation/{id}/page
+  metric: requests
+  limit: 10800
+  window: 1 hour
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: publish_page (PUT /page/{id}/publish)
+  scope: api-key
+  operationId: publish_page
+  method: PUT
+  path: /page/{id}/publish
+  metric: requests
+  limit: 10800
+  window: 1 hour
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: list_versions (GET /version)
+  scope: api-key
+  operationId: list_versions
+  method: GET
+  path: /version
+  metric: requests
+  limit: 60
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: update_version (PUT /version/{id})
+  scope: api-key
+  operationId: update_version
+  method: PUT
+  path: /version/{id}
+  metric: requests
+  limit: 3600
+  window: 1 hour
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: clone_version (POST /version/{id}/clone)
+  scope: api-key
+  operationId: clone_version
+  method: POST
+  path: /version/{id}/clone
+  metric: requests
+  limit: 60
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: list_documentation (GET /version/{id}/documentation)
+  scope: api-key
+  operationId: list_documentation
+  method: GET
+  path: /version/{id}/documentation
+  metric: requests
+  limit: 60
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: get_version_report (GET /version/{id}/report)
+  scope: api-key
+  operationId: get_version_report
+  method: GET
+  path: /version/{id}/report
+  metric: requests
+  limit: 60
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: get_version_broken_links (GET /version/{id}/broken-links)
+  scope: api-key
+  operationId: get_version_broken_links
+  method: GET
+  path: /version/{id}/broken-links
+  metric: requests
+  limit: 60
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: add_reference (POST /version/{versionId}/reference)
+  scope: api-key
+  operationId: add_reference
+  method: POST
+  path: /version/{versionId}/reference
+  metric: requests
+  limit: 300
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: read_reference_definition (GET /reference/{id}/definition)
+  scope: api-key
+  operationId: read_reference_definition
+  method: GET
+  path: /reference/{id}/definition
+  metric: requests
+  limit: 600
+  window: 1 minute
+  windowMinutes: 1
+  source: openapi operation description (provider-published)
+- name: publish_reference (PUT /reference/{id}/publish)
+  scope: api-key
+  operationId: publish_reference
+  method: PUT
+  path: /reference/{id}/publish
+  metric: requests
+  limit: 300
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: export_project (GET /export)
+  scope: api-key
+  operationId: export_project
+  method: GET
+  path: /export
+  metric: requests
+  limit: 10
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: search (GET /search)
+  scope: api-key
+  operationId: search
+  method: GET
+  path: /search
+  metric: requests
+  limit: 10800
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: all_project (GET /all)
+  scope: api-key
+  operationId: all_project
+  method: GET
+  path: /all
+  metric: requests
+  limit: 30
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: get_audit_log (GET /audit)
+  scope: api-key
+  operationId: get_audit_log
+  method: GET
+  path: /audit
+  metric: requests
+  limit: 600
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: get_users (GET /users)
+  scope: api-key
+  operationId: get_users
+  method: GET
+  path: /users
+  metric: requests
+  limit: 3600
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: get_reader_access (GET /reader-access)
+  scope: api-key
+  operationId: get_reader_access
+  method: GET
+  path: /reader-access
+  metric: requests
+  limit: 3600
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: create_reader_access (POST /reader-access)
+  scope: api-key
+  operationId: create_reader_access
+  method: POST
+  path: /reader-access
+  metric: requests
+  limit: 100
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: revoke_reader_access (PATCH /reader-access)
+  scope: api-key
+  operationId: revoke_reader_access
+  method: PATCH
+  path: /reader-access
+  metric: requests
+  limit: 100
+  window: 60 minutes
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: create_changelog_post (POST /changelog/{id}/post)
+  scope: api-key
+  operationId: create_changelog_post
+  method: POST
+  path: /changelog/{id}/post
+  metric: requests
+  limit: 10800
+  window: 1 hour
+  windowMinutes: 60
+  source: openapi operation description (provider-published)
+- name: list_changelog_posts (GET /changelog/{id}/post)
+  scope: api-key
+  operationId: list_changelog_posts
+  method: GET
+  path: /changelog/{id}/post
+  metric: requests
+  limit: 600
+  window: 60 seconds
+  windowMinutes: 1.0
+  source: openapi operation description (provider-published)
+planLimits:
+  published: false
+  note: 'DeveloperHub publishes no per-plan request-rate table. Plan boundaries in the API are capability
+    gates, not rate gates: export_project and get_audit_log are documented as "Only available in enterprise
+    plans".'
+enterpriseOnlyOperations:
+- export_project
+- get_audit_log
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+- name: Per-operation limits
+  description: Each operation carries its own budget; there is no single account-wide rate.
+- name: Signalling
+  description: X-RateLimit-Limit / -Remaining / -Reset are returned on successful responses; exhaustion
+    returns 429 with internal code 9.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

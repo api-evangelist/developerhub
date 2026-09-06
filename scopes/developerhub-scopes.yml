@@ -1,0 +1,61 @@
+generated: '2026-09-06'
+method: probed
+source: >-
+  https://ai.developerhub.io/.well-known/oauth-authorization-server and
+  https://ai.developerhub.io/.well-known/oauth-protected-resource , fetched 2026-09-06;
+  permission names read from https://docs.developerhub.io/api.md
+provider: DeveloperHub
+providerId: developerhub
+note: >-
+  The REST API declares no OAuth flows — it is X-Api-Key only. OAuth exists on exactly one surface:
+  the hosted Editor MCP server at https://ai.developerhub.io/mcp, whose RFC 8414 / RFC 9728
+  discovery documents are served anonymously and declare a single scope. Alongside that, API keys
+  carry a separate, finer-grained permission vocabulary that the OpenAPI names per operation; those
+  are recorded here as api_key_permissions because they are not OAuth scopes.
+authorization_server:
+  issuer: https://ai.developerhub.io/
+  authorization_endpoint: https://ai.developerhub.io/authorize
+  token_endpoint: https://ai.developerhub.io/token
+  registration_endpoint: https://ai.developerhub.io/register
+  grant_types_supported:
+  - authorization_code
+  - refresh_token
+  response_types_supported:
+  - code
+  code_challenge_methods_supported:
+  - S256
+  token_endpoint_auth_methods_supported:
+  - client_secret_post
+  - none
+  dynamic_client_registration: true
+  document: well-known/developerhub-oauth-authorization-server.json
+protected_resource:
+  resource: https://ai.developerhub.io/
+  resource_name: DeveloperHub
+  authorization_servers:
+  - https://ai.developerhub.io/
+  document: well-known/developerhub-oauth-protected-resource.json
+scope_count: 1
+scopes:
+- name: editor
+  description: >-
+    Act as the signed-in DeveloperHub editor on the Editor MCP server. The agent reaches only the
+    projects that person can already edit, and only those with the Editor MCP server turned on.
+  surface: https://ai.developerhub.io/mcp
+  source: oauth-authorization-server + oauth-protected-resource metadata
+api_key_permissions:
+  note: >-
+    Separate from OAuth. The OpenAPI names a permission on individual operations; only the changelog
+    operations state one explicitly, and no published permissions reference page enumerates the rest.
+  documented:
+  - name: changelog.edit
+    operations:
+    - create_changelog_post
+  - name: changelog.read
+    operations:
+    - list_changelog_posts
+  undocumented_note: >-
+    https://docs.developerhub.io/support-center/api-key says "Each API Key can have different
+    permissions. Consult the API to know which permissions you need", so the full permission
+    vocabulary is only visible in the key-creation UI.
+  docs: https://docs.developerhub.io/support-center/api-key

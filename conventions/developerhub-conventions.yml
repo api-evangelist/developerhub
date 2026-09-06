@@ -1,0 +1,219 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.developerhub.io/api/ref (machine-readable at https://docs.developerhub.io/api.md),
+  https://docs.developerhub.io/support-center/api-key ,
+  https://docs.developerhub.io/support-center/editor-mcp-server ; live unauthenticated responses from
+  https://api.developerhub.io/api/v1/version observed 2026-09-06
+provider: DeveloperHub
+providerId: developerhub
+api: DeveloperHub.io API v1.1.0
+base_url: https://api.developerhub.io/api/v1
+summary: >-
+  A small, flat, project-scoped REST API. One authentication style, one error envelope, per-operation
+  rate limits carried in the spec itself, and a draft/publish model that is the closest thing the API
+  has to a safety net. There is no Idempotency-Key mechanism, no request-id header, and no
+  cursor pagination outside the changelog listing.
+authentication:
+  style: api-key
+  header: X-Api-Key
+  scheme_name: Api-Key
+  scope: >-
+    Keys are created per project under Project Settings → API Keys, and each key carries its own
+    permission set (for example changelog.edit, changelog.read).
+  docs: https://docs.developerhub.io/support-center/api-key
+  observed:
+  - request: GET https://api.developerhub.io/api/v1/version with no key
+    status: 403
+    body: '{"error":{"message":"No API Key was provided. Read our API Reference at https://docs.developerhub.io/api","httpCode":403,"code":403}}'
+  - request: GET https://api.developerhub.io/api/v1/version with an invalid key
+    status: 400
+    body: '{"error":{"message":"API Key is invalid","httpCode":400,"code":0}}'
+  cross_reference: authentication/developerhub-authentication.yml
+idempotency:
+  coverage: partial
+  scope:
+  - add_reference
+  mechanism: natural-key upsert
+  header: null
+  detail: >-
+    There is no Idempotency-Key header anywhere in the API. One write operation is replay-safe by
+    construction: POST /version/{versionId}/reference upserts on the reference title — "If the
+    reference title matches one that already existed, then it is updated" — so re-running a CI/CD
+    upload does not create a duplicate reference. Every other mutating operation (create_page,
+    update_page, delete_page, publish_page, clone_version, update_version, create_reader_access,
+    revoke_reader_access, publish_reference, create_changelog_post) has no replay protection; a
+    retried create_page or create_changelog_post produces a second page or post.
+    create_reader_access and revoke_reader_access are keyed on an email address and are effectively
+    set-semantics, but the docs do not say so, so they are not counted.
+  writes_total: 11
+  writes_protected: 1
+  docs: https://docs.developerhub.io/support-center/api-key
+reversibility:
+  grade: documented
+  detail: >-
+    Two of the eleven write surfaces have a documented reversal and neither states a window; one is
+    documented as irreversible. Nothing in the REST API publishes a restore window, so this grades
+    `documented` rather than `verified`. The one 30-day restore window DeveloperHub does publish
+    belongs to GitHub Sync, not to the API.
+  surfaces:
+  - write: update_version
+    operation: PUT /version/{id}
+    reversal: update_version
+    how: >-
+      The same operation publishes or unpublishes a version, so publishing is directly undoable by
+      setting published back to false.
+    window: null
+    docs: https://docs.developerhub.io/api/ref
+  - write: create_reader_access
+    operation: POST /reader-access
+    reversal: revoke_reader_access
+    reversal_operation: PATCH /reader-access
+    how: Revokes access for the same email address.
+    window: null
+    docs: https://docs.developerhub.io/api/ref
+  - write: create_page
+    operation: POST /documentation/{id}/page
+    reversal: delete_page
+    how: >-
+      A page created by the API starts unpublished, so an unwanted create is invisible to readers
+      until publish_page is called; deleting it removes it outright.
+    window: null
+    docs: https://docs.developerhub.io/support-center/editor-mcp-server
+  - write: update_page
+    operation: PUT /page/{id}
+    reversal: null
+    how: >-
+      Body edits land in the page's DRAFT and are not visible to readers until publish_page, which
+      is a rehearsal rather than a reversal. Title and slug changes are NOT drafted and take effect
+      immediately on published pages; there is no documented undo for them.
+    window: null
+    docs: https://docs.developerhub.io/support-center/editor-mcp-server
+  - write: delete_page
+    operation: DELETE /page/{id}
+    reversal: null
+    irreversible: true
+    how: >-
+      "Deleting a page cannot be undone." The Editor MCP tool requires the page's current slug as
+      confirmation; the REST operation does not.
+    window: null
+    docs: https://docs.developerhub.io/support-center/editor-mcp-server
+  - write: add_reference
+    operation: POST /version/{versionId}/reference
+    reversal: null
+    how: >-
+      Upload with publish=false to import as a draft and publish later with publish_reference; a
+      published reference replaced by a new upload has no documented rollback.
+    window: null
+    docs: https://docs.developerhub.io/support-center/api-key
+  out_of_band:
+  - surface: GitHub Sync file deletion
+    window: 30 days
+    detail: >-
+      "Restoring the file within 30 days brings it all back where it was." This is the Git sync
+      product, not the REST API.
+    docs: https://docs.developerhub.io/support-center/github-sync
+dry_run_mode:
+  available: partial
+  detail: >-
+    No REST dry-run. The Editor MCP server exposes validate_markdoc, which reports what a body would
+    lose without writing it, and add_reference accepts publish=false to stage a reference as a draft.
+  operations:
+  - validate_markdoc (MCP only)
+  - add_reference?publish=false
+pagination:
+  style: mixed
+  coverage: partial
+  detail: >-
+    Three of the eight collection operations paginate, and they do not agree on a style.
+    list_changelog_posts and get_audit_log are cursor-based: they take a size parameter (count, max
+    50; hits, max 100) plus an opaque cursor, and return a cursor in the body that is null when
+    there are no more results. search is offset-based: it takes page (numbering starts at 0) and
+    hits, and returns nbHits / page / nbPages / hitsPerPage. Everything else — list_versions,
+    list_documentation, get_version_report, get_version_broken_links, get_users, get_reader_access,
+    all_project — returns the full set with no paging parameters at all.
+  cursor_operations:
+  - operationId: list_changelog_posts
+    size_param: count
+    size_max: 50
+    default: 10
+    cursor_param: cursor
+    response_field: cursor
+  - operationId: get_audit_log
+    size_param: hits
+    size_max: 100
+    cursor_param: cursor
+    response_field: cursor
+  offset_operations:
+  - operationId: search
+    page_param: page
+    page_base: 0
+    size_param: hits
+    response_fields:
+    - nbHits
+    - page
+    - nbPages
+    - hitsPerPage
+  unpaginated_operations:
+  - list_versions
+  - list_documentation
+  - get_version_report
+  - get_version_broken_links
+  - get_users
+  - get_reader_access
+  - all_project
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+content_negotiation:
+  request: application/json (multipart/form-data for add_reference)
+  response: application/json
+  detail: >-
+    read_page and get_page take a `format` query parameter to return page content as Markdoc or a
+    derived format; read_reference_definition returns the raw specification as JSON or YAML.
+  unsupported_media_type: 415 with the UnsupportedContentType envelope
+request_tracing:
+  header: null
+  detail: >-
+    No request-id or correlation header is documented, and none was returned on the live responses
+    observed on 2026-09-06. An agent has no handle to quote back to support.
+versioning:
+  style: uri-path
+  current: v1
+  base: https://api.developerhub.io/api/v1
+  spec_version: 1.1.0
+  spec_format: OpenAPI 3.2.0
+  detail: >-
+    The version lives in the path. The published document is versioned separately (info.version
+    1.1.0) and the docs site itself is versioned (/v1.0/api/ref).
+  cross_reference: lifecycle/developerhub-lifecycle.yml
+error_envelope:
+  shape: nested
+  canonical: '{"error":{"message":"...","httpCode":<int>,"code":<int>}}'
+  fields:
+  - error.message
+  - error.httpCode
+  - error.code
+  inconsistency: >-
+    The 400 "General Exception" response uses the `Error` schema, which is FLAT
+    ({"message","httpCode","code"}) rather than nested under `error`. Live 400s observed on
+    2026-09-06 returned the NESTED shape, so a client written against the spec's 400 schema will
+    mis-parse a real 400. Recorded, not corrected — the spec is the provider's.
+  rfc9457: false
+  cross_reference: errors/developerhub-problem-types.yml
+rate_limit_signalling:
+  headers:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  retry_after: false
+  exhausted_status: 429
+  exhausted_internal_code: 9
+  detail: >-
+    Every operation carries its own published budget in its description, and every 2xx response
+    declares the three X-RateLimit-* headers. There is no Retry-After.
+  cross_reference: rate-limits/developerhub-rate-limits.yml
+metadata:
+  supported: false
+  detail: No customer-defined metadata field on any resource.

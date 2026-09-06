@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: DeveloperHub.io Documentation Reader Access API
+  title: DeveloperHub.io Changelog API
   description: API to manage your %product% resources programmatically. Using these APIs, you are able
     to manage pages, integrate with CI/CD, and retrieve resources among other operations.
   version: 1.1.0
@@ -12,15 +12,61 @@ servers:
   variables: {}
 security:
 - Api-Key: []
-tags: []
+tags:
+- name: Changelog
+  description: Operations for creating and listing changelog posts.
 paths:
-  /reader-access:
-    get:
+  /changelog/{id}/post:
+    post:
       tags:
-      - Reader Access
-      summary: Get access details of all invited readers
-      description: 'Get access details of all invited readers. Rate limit: 3600 in 60 minutes.'
-      operationId: get_reader_access
+      - Changelog
+      summary: Create a changelog post
+      description: 'Creates a changelog post from Markdoc content, optionally publishing it immediately.
+        The slug is generated from the title if not provided. Permission: `changelog.edit`. Rate limit:
+        10800 in 1 hour.'
+      operationId: create_changelog_post
+      parameters:
+      - name: id
+        in: path
+        description: Changelog ID
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Changelog post object
+              properties:
+                title:
+                  type: string
+                  description: Title of the changelog post
+                  example: 26 May 2026
+                content:
+                  type: string
+                  description: Contents of the post in [Markdoc format](https://docs.developerhub.io/support-center/exporting-documentation#markdoc)
+                  example: 'We just shipped **2.0**
+
+
+                    ## Highlights
+
+                    - Faster search
+
+                    '
+                slug:
+                  type: string
+                  description: Slug in the URL. Must match `^[a-zA-Z0-9-]+$`. Generated from the title
+                    if not provided
+                  example: 26-may-2026
+                published:
+                  type: boolean
+                  description: Publish the post immediately
+                  default: false
+              required:
+              - title
+              - content
       responses:
         '200':
           description: OK
@@ -34,10 +80,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReaderAccess'
-                description: Reader access details
+                $ref: '#/components/schemas/ChangelogPost'
         '400':
           description: Client Error
           content:
@@ -50,60 +93,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccessDenied'
-        '429':
-          description: Too many requests
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/TooManyRequests'
-      deprecated: false
-    post:
-      tags:
-      - Reader Access
-      summary: Grant access to reader
-      description: 'Grants access to reader. Only applicable when project is protected by "Email Invite".
-        Rate limit: 100 in 60 minutes.'
-      operationId: create_reader_access
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              description: Reader access object
-              required:
-              - email
-              properties:
-                email:
-                  type: string
-                  description: Email address of reader
-                  example: peter@example.com
-                expiresAt:
-                  type:
-                  - string
-                  - 'null'
-                  description: Date of expiry in Y-m-d\TH:i:sP format
-                  example: 2022-01-01T03:02:01+0000
-      responses:
-        '200':
-          description: OK
-          headers:
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/X-RateLimit-Limit'
-            X-RateLimit-Remaining:
-              $ref: '#/components/headers/X-RateLimit-Remaining'
-            X-RateLimit-Reset:
-              $ref: '#/components/headers/X-RateLimit-Reset'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReaderAccess'
-        '403':
-          description: Access denied
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AccessDenied'
         '415':
           description: Unsupported content-type
           content:
@@ -117,26 +106,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
-    patch:
+    get:
       tags:
-      - Reader Access
-      summary: Revoke access to reader
-      description: 'Revokes access to reader. Rate limit: 100 in 60 minutes.'
-      operationId: revoke_reader_access
-      requestBody:
+      - Changelog
+      summary: List changelog posts
+      description: 'Lists a changelog''s posts, newest first. Returns the 10 most recent posts by default;
+        use `cursor` to page. Permission: `changelog.read`. Rate limit: 600 in 60 seconds.'
+      operationId: list_changelog_posts
+      parameters:
+      - name: id
+        in: path
+        description: Changelog ID
         required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              description: Reader access object
-              required:
-              - email
-              properties:
-                email:
-                  type: string
-                  description: Email address of reader
-                  example: peter@example.com
+        schema:
+          type: integer
+      - name: count
+        in: query
+        schema:
+          type: integer
+          default: 10
+        description: Number of posts to retrieve. Maximum is 50
+        example: 10
+        required: false
+      - name: cursor
+        in: query
+        schema:
+          type: string
+        description: Cursor for next page of results
+        example: XAr
+        required: false
       responses:
         '200':
           description: OK
@@ -150,19 +148,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReaderAccess'
+                $ref: '#/components/schemas/ChangelogPostList'
         '403':
           description: Access denied
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccessDenied'
-        '415':
-          description: Unsupported content-type
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnsupportedContentType'
         '429':
           description: Too many requests
           content:
@@ -207,6 +199,77 @@ components:
               type: number
               description: Internal error code
               example: 403
+    ChangelogPost:
+      title: Changelog Post
+      description: Changelog post object
+      required:
+      - id
+      - title
+      - slug
+      - published
+      - content
+      - created
+      - updated
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+          example: 4821
+        title:
+          type: string
+          description: Title of the changelog post
+          example: 26 May 2026
+        slug:
+          type: string
+          description: Slug in the URL
+          example: 26-may-2026
+        published:
+          type: boolean
+          description: True if the post is published
+          example: true
+        content:
+          type:
+          - string
+          - 'null'
+          description: Contents of the post in Markdoc format. Null if the post has no content.
+          example: We just shipped **2.0**
+        created:
+          type: string
+          description: Date of creation
+          example: 2026-06-02T19:02:14+0000
+        updated:
+          type: string
+          description: Date of last update
+          example: 2026-06-02T19:02:14+0000
+    ChangelogPostList:
+      title: Changelog Post List
+      description: Paginated list of changelog posts
+      type: object
+      required:
+      - posts
+      - count
+      - total
+      - cursor
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangelogPost'
+        count:
+          type: integer
+          description: Number of posts retrieved
+          example: 10
+        total:
+          type: integer
+          description: Total number of posts in the changelog
+          example: 42
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: Cursor for next page of results. Null value if there are no more results
+          example: XAr
     Error:
       title: Error
       type: object
@@ -223,36 +286,6 @@ components:
           type: number
           description: Internal error code
           example: 400
-    ReaderAccess:
-      title: Reader Access
-      description: Reader Access
-      required:
-      - email
-      - expiresAt
-      - created
-      - revoked
-      type: object
-      properties:
-        email:
-          type: string
-          description: Reader e-mail address
-          example: peter@example.com
-        expiresAt:
-          type:
-          - string
-          - 'null'
-          description: Date when the access expires. Null if it never expires.
-          example: 2022-04-20T19:03:14+0000
-        created:
-          type: string
-          description: Date of access creation
-          example: 2022-03-20T19:02:14+0000
-        revoked:
-          type:
-          - string
-          - 'null'
-          description: Date when revoked. Null if not revoked.
-          example: 2022-03-22T20:02:15+0000
     TooManyRequests:
       title: TooManyRequests
       type: object

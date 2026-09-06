@@ -1,0 +1,138 @@
+generated: '2026-09-06'
+method: probed
+source: >-
+  https://docs.developerhub.io/support-center/mcp-server.md ,
+  https://docs.developerhub.io/support-center/reader-mcp-server.md ,
+  https://docs.developerhub.io/support-center/editor-mcp-server.md ; tools/list probed live against
+  https://docs.developerhub.io/mcp on 2026-09-06
+provider: DeveloperHub
+providerId: developerhub
+status: published
+summary: >-
+  DeveloperHub ships TWO first-party remote MCP servers over Streamable HTTP. The Reader MCP server
+  runs on every customer's documentation site at the /mcp route of that site's docs URL and is
+  read-only; DeveloperHub runs its own instance at https://docs.developerhub.io/mcp, which answered
+  initialize and tools/list anonymously. The Editor MCP server is a single hosted endpoint at
+  https://ai.developerhub.io/mcp; it is OAuth-protected (RFC 9728 challenge on an unauthenticated
+  POST) and each editor connects as their own DeveloperHub account.
+deployment:
+  mode: remote
+  endpoint: https://ai.developerhub.io/mcp
+  auth: oauth
+  verified: probed
+  note: >-
+    Two remote endpoints, no stdio package. The Editor server (endpoint above) is the writable one
+    and is the endpoint an agent is told to add ("claude mcp add --transport http developerhub
+    https://ai.developerhub.io/mcp"). The Reader server is per-tenant at <docs-domain>/mcp;
+    DeveloperHub's own instance is https://docs.developerhub.io/mcp and needs no auth.
+servers:
+- name: DeveloperHub Reader MCP Server
+  role: reader
+  endpoint: https://docs.developerhub.io/mcp
+  endpoint_pattern: https://<your-docs-domain>/mcp
+  transport: streamable-http
+  auth: none
+  scope: read-only over published documentation
+  availability: public projects only; private projects on request
+  probe:
+    method: POST
+    initialize_status: 200
+    protocolVersion: '2025-06-18'
+    serverInfo:
+      name: DeveloperHub.io MCP
+      version: 0.1.0
+    capabilities:
+      tools:
+        listChanged: true
+    tools_list_status: 200
+    raw: mcp/developerhub-reader-mcp-tools.json
+  tools:
+  - name: search
+    title: Search documentation
+    description: >-
+      Search the documentation and return the most relevant excerpts for a query, each with its
+      source page title and link.
+    input_schema_properties:
+    - query
+    annotations:
+      readOnlyHint: true
+      openWorldHint: false
+    source: live tools/list
+  docs: https://docs.developerhub.io/support-center/reader-mcp-server
+- name: DeveloperHub Editor MCP Server
+  role: editor
+  endpoint: https://ai.developerhub.io/mcp
+  transport: streamable-http
+  auth: oauth
+  auth_detail:
+    challenge_status: 401
+    www_authenticate: >-
+      Bearer resource_metadata="https://ai.developerhub.io/.well-known/oauth-protected-resource"
+    error: invalid_token
+    error_description: Missing editor access token
+    protected_resource: well-known/developerhub-oauth-protected-resource.json
+    authorization_server: well-known/developerhub-oauth-authorization-server.json
+    scopes:
+    - editor
+    dynamic_client_registration: https://ai.developerhub.io/register
+    note: >-
+      Live tool schemas are auth-gated. The tool list below is transcribed from the provider's own
+      published table at https://docs.developerhub.io/support-center/editor-mcp-server — names and
+      descriptions only; inputSchema requires an authenticated introspection.
+  install: 'claude mcp add --transport http developerhub https://ai.developerhub.io/mcp'
+  tools_source: docs-table
+  tools:
+  - name: list_projects
+    description: Lists the projects you can edit. Every other tool needs a project, so an agent starts here.
+  - name: list_versions
+    description: Lists a project's versions.
+  - name: clone_version
+    description: Copies a version, with its documentation and API references, into a new one.
+  - name: list_documentation_sections
+    description: Lists the documentation sections in a version.
+  - name: list_api_references
+    description: Lists the API references in a version.
+  - name: list_pages
+    description: Lists the pages in a version, optionally filtered by title or slug.
+  - name: find_page_by_slug
+    description: Resolves a page from its slug.
+  - name: find_text
+    description: Finds exact text across every page in a version, drafts included.
+  - name: search_pages
+    description: Runs a relevance search over the published pages in a version.
+  - name: get_page
+    description: Reads a page's editable body as Markdoc.
+  - name: create_page
+    description: Creates a page, optionally nested under an existing one. It starts unpublished.
+  - name: edit_page
+    description: Changes a page's body, title, slug, or any combination of the three.
+  - name: publish_page
+    description: Publishes a page's draft.
+  - name: delete_page
+    description: Permanently deletes a page.
+  - name: edit_api_reference
+    description: Replaces the draft OpenAPI spec of an API reference.
+  - name: check_broken_links
+    description: Checks a single page, or a whole version, for broken links.
+  - name: get_markdoc_syntax
+    description: Returns the Markdoc reference the agent writes against.
+  - name: list_audiences
+    description: Lists the project's audiences, for adaptive content.
+  - name: validate_markdoc
+    description: Checks a body for content that would be silently dropped, without writing it.
+  - name: get_search_analytics
+    description: Reads what readers search for in your published docs.
+  - name: get_project_feedback
+    description: >-
+      Reads the feedback across a project: the totals, the best and worst rated pages, and recent
+      comments.
+  - name: get_page_feedback
+    description: Reads the ratings and comments on a single page.
+  docs: https://docs.developerhub.io/support-center/editor-mcp-server
+safety_notes:
+- >-
+  delete_page on the Editor MCP server is irreversible; the agent must pass the page's current slug
+  back as confirmation, so it cannot delete a page it has not looked up.
+- >-
+  Body edits are written to a page draft and are invisible to readers until publish_page is called,
+  but title and slug changes are NOT drafted and take effect immediately on published pages.

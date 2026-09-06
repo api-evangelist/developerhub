@@ -1,0 +1,74 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.developerhub.io/api/ref , https://docs.developerhub.io/product-updates ,
+  https://docs.developerhub.io/product-updates/rss.xml , https://developerhub.io/security ,
+  https://status.developerhub.io , https://developerhub.io/pricing ,
+  https://developerhub.io/terms
+provider: DeveloperHub
+providerId: developerhub
+versioning:
+  scheme: uri-path
+  current: v1
+  base: https://api.developerhub.io/api/v1
+  contract_version: 1.1.0
+  contract_format: OpenAPI 3.2.0
+  docs_versioned: true
+  docs_version_path: https://docs.developerhub.io/v1.0/api/ref
+  note: >-
+    One major version has ever shipped. The OpenAPI document carries its own semantic version
+    (1.1.0), which is the only signal a consumer has that the contract moved.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations:
+  - operationId: null
+    name: openLink(event, link)
+    surface: documentation-site JavaScript API
+    replacement: navigate(link, options)
+    docs: https://docs.developerhub.io/support-center/developer-tools
+    note: >-
+      The only thing DeveloperHub marks Deprecated anywhere in its public surface is a front-end
+      helper on the rendered docs site, not a REST operation.
+  openapi_deprecated_count: 0
+  detail: >-
+    No deprecation or sunset policy is published, no operation in the OpenAPI carries
+    deprecated: true, and neither Sunset nor Deprecation response headers appear in the contract.
+    Enterprise contracts are described as carrying a "custom invoicing and SLA", so an SLA exists
+    only under contract.
+status_page:
+  url: https://status.developerhub.io
+  provider: UptimeRobot
+  public: true
+  probed_status: 200
+  published_uptime: 99.9%+ over a rolling 12 months
+  source: https://developerhub.io/security
+change_log:
+  url: https://docs.developerhub.io/product-updates
+  feed: https://docs.developerhub.io/product-updates/rss.xml
+  format: rss
+  entries_available: 655
+  cadence: near-daily
+  latest_entry: '2026-09-05'
+  cross_reference: changelog/developerhub-changelog.yml
+sla:
+  published: false
+  tier: enterprise-only
+  detail: >-
+    "Custom invoicing and SLA" is listed as an Enterprise plan element on
+    https://developerhub.io/pricing. No SLA document or credit schedule is public.
+support:
+  community: https://talk.developerhub.io
+  docs: https://docs.developerhub.io/support-center/contact-us
+  security: security@developerhub.io
+data_lifecycle:
+  trial_expiry: >-
+    A project that does not subscribe at the end of the 14-day trial drops to the Free plan rather
+    than being deleted.
+  github_sync_restore_window_days: 30
+  github_sync_restore_note: >-
+    A file deleted from a synced repository hides its content; restoring the file within 30 days
+    brings it back where it was.
+  page_deletion: irreversible

@@ -1,0 +1,33 @@
+{
+    "result": {
+        "tools": [
+            {
+                "name": "search",
+                "title": "Search documentation",
+                "description": "Search the documentation and return the most relevant excerpts for a query, each with its source page title and link.",
+                "inputSchema": {
+                    "$schema": "http://json-schema.org/draft-07/schema#",
+                    "type": "object",
+                    "properties": {
+                        "query": {
+                            "type": "string",
+                            "description": "A natural-language question or search query about the documentation"
+                        }
+                    },
+                    "required": [
+                        "query"
+                    ]
+                },
+                "annotations": {
+                    "readOnlyHint": true,
+                    "openWorldHint": false
+                },
+                "execution": {
+                    "taskSupport": "forbidden"
+                }
+            }
+        ]
+    },
+    "jsonrpc": "2.0",
+    "id": 2
+}

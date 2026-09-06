@@ -1,0 +1,68 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://registry.npmjs.org/@developerhub%2Fdh-skills ,
+  https://api.github.com/orgs/developerhub-io/repos ,
+  https://docs.developerhub.io/support-center/write-markdoc-with-ai ;
+  negative probes against PyPI, RubyGems, Packagist and crates.io
+provider: DeveloperHub
+providerId: developerhub
+summary: >-
+  DeveloperHub publishes exactly one first-party package, and it is NOT a client library. There is no
+  DeveloperHub SDK in any registry for any language: the documented way to call the v1 REST API is
+  cURL with an X-Api-Key header, and the documented way to drive it from an agent is the hosted MCP
+  servers. The one published package is an Agent Skills bundle that teaches a coding agent
+  DeveloperHub's Markdoc dialect and repository layout.
+package_count: 1
+sdk_count: 0
+sdk_note: >-
+  No first-party client library exists on npm, PyPI, RubyGems, Packagist, crates.io, Maven Central,
+  NuGet or pkg.go.dev. No `SDKs` pointer is emitted for this provider, because emitting one would
+  claim an SDK that does not exist.
+packages:
+- name: '@developerhub/dh-skills'
+  registry: npm
+  url: https://www.npmjs.com/package/@developerhub/dh-skills
+  version: 1.4.0
+  published: '2026-08-06'
+  official: true
+  kind: agent-skills
+  language: markdown
+  license: MIT
+  repository: https://github.com/developerhub-io/dh-skills
+  publisher: zaiddabaeen
+  description: >-
+    Agent Skills that teach AI coding agents to author DeveloperHub Markdoc — the exact syntax for
+    every content block — plus the repository layout of a Git-synced DeveloperHub project.
+  contains:
+  - write-markdoc
+  - organize-docs-repo
+  install:
+  - npm install @developerhub/dh-skills
+  - npx skills add developerhub-io/dh-skills
+  - /plugin marketplace add developerhub-io/dh-skills
+  docs: https://docs.developerhub.io/support-center/write-markdoc-with-ai
+  cross_reference: skills/_index.yml
+negative_probes:
+- registry: pypi
+  query: developerhub
+  status: 404
+- registry: pypi
+  query: developerhub-io
+  status: 404
+- registry: rubygems
+  query: developerhub
+  status: 404
+- registry: packagist
+  query: developerhub/developerhub
+  status: 404
+- registry: npm
+  query: 'scope:developerhub'
+  result: only @developerhub/dh-skills
+related_repositories:
+  note: >-
+    The developerhub-io GitHub org holds 13 repositories, but the API-adjacent ones are forks of
+    third-party tooling (redocly-cli, rapipdf, apicurio-studio, openapi.tools, lightpanda,
+    angular-tree-component) kept for the product's own docs rendering, not published client
+    libraries. First-party originals are dh-skills, zendesk-app, mdimg, tools and docs.
+  url: https://github.com/developerhub-io

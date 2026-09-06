@@ -1,0 +1,85 @@
+generated: '2026-09-06'
+provider: DeveloperHub
+providerId: developerhub
+summary: >-
+  Five Agent Skills. Two are DeveloperHub's own, saved verbatim from the MIT-licensed
+  developerhub-io/dh-skills repository the provider publishes and documents; three are written here
+  from the provider's OpenAPI 1.1.0, grounded in real operationIds with the published rate limits
+  and the draft/publish semantics carried through.
+skill_count: 5
+skills:
+- name: write-markdoc
+  file: developerhub-write-markdoc.md
+  method: searched
+  source: https://raw.githubusercontent.com/developerhub-io/dh-skills/main/skills/write-markdoc/SKILL.md
+  version: '1.3'
+  official: true
+  license: MIT
+  docs: https://docs.developerhub.io/support-center/write-markdoc-with-ai
+  package: '@developerhub/dh-skills'
+  description: >-
+    Write, author, edit and format DeveloperHub documentation pages in the correct Markdoc syntax —
+    every block and inline tag with its exact attributes, defaults and allowed values.
+  note: >-
+    Saved VERBATIM. Its companion reference file (references/blocks.md) is not vendored here; read it
+    from the upstream repository.
+- name: organize-docs-repo
+  file: developerhub-organize-docs-repo.md
+  method: searched
+  source: https://raw.githubusercontent.com/developerhub-io/dh-skills/main/skills/organize-docs-repo/SKILL.md
+  version: '1.6'
+  official: true
+  license: MIT
+  docs: https://docs.developerhub.io/support-center/write-markdoc-with-ai
+  package: '@developerhub/dh-skills'
+  description: >-
+    Produce the file and folder layout of a DeveloperHub Git-synced documentation repository —
+    _nav.yaml, _settings.yaml, developerhub.yaml, refs, changelogs, images — and interpret the pull
+    request sync check.
+  note: >-
+    Saved VERBATIM. Its companion reference files (references/repo-structure.md,
+    references/fontawesome-icons.md) are not vendored here.
+- name: developerhub-publish-api-reference
+  file: developerhub-publish-api-reference.md
+  method: generated
+  source: openapi/_original/developerhub-openapi.yml
+  official: false
+  operations:
+  - list_versions
+  - add_reference
+  - publish_reference
+  - read_reference_definition
+  description: >-
+    The CI/CD flow: upload an OpenAPI specification to a version and publish it as a rendered API
+    reference, including the title-upsert behaviour that makes this the one replay-safe write.
+- name: developerhub-publish-documentation-page
+  file: developerhub-publish-documentation-page.md
+  method: generated
+  source: openapi/_original/developerhub-openapi.yml
+  official: false
+  operations:
+  - list_versions
+  - list_documentation
+  - create_page
+  - update_page
+  - publish_page
+  - get_page
+  - read_page
+  - delete_page
+  description: >-
+    Create, write, publish and read back a page, with the draft/publish split — and the fact that
+    title and slug changes are NOT drafted, and that deletion is irreversible.
+- name: developerhub-release-a-docs-version
+  file: developerhub-release-a-docs-version.md
+  method: generated
+  source: openapi/_original/developerhub-openapi.yml
+  official: false
+  operations:
+  - list_versions
+  - clone_version
+  - get_version_broken_links
+  - get_version_report
+  - update_version
+  description: >-
+    Cut a docs version for a product release: clone, gate on broken links of severity error, review
+    pages with unpublished drafts, then publish.

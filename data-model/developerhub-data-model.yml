@@ -1,0 +1,196 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  openapi/_original/developerhub-openapi.yml (components.schemas, path templates and $ref links),
+  enriched from https://docs.developerhub.io/support-center/project-structure
+provider: DeveloperHub
+providerId: developerhub
+summary: >-
+  A strict containment tree, four levels deep: a Project holds Versions, a Version holds
+  Documentation sections and API References, a Documentation section holds Pages, and a Page may nest
+  under another Page. Identifiers are integers, and every content object also carries a human slug —
+  which is why the API lets you address a page either by id (read_page) or by the slug triple
+  version_slug + documentation_slug + page_slug (get_page). The Project itself is implicit: it is
+  whatever the API key belongs to, and no operation takes a project id.
+identifiers:
+  style: integer
+  prefixes: none
+  note: >-
+    No prefixed or typed ids (no "pg_", "ver_"). Every id is a bare integer, unique within its own
+    type, so an id is only meaningful alongside the operation that returned it.
+  dual_addressing:
+    detail: >-
+      Content objects carry both an integer id and a URL slug. Page also exposes `path`, "the path of
+      the page as version, documentation and page slugs", which is the fully-qualified natural key.
+    slug_scoped_by: parent
+entities:
+- name: Project
+  implicit: true
+  key: the API key
+  note: >-
+    Never appears as a schema and no operation takes a project id — the key IS the project scope.
+    The Editor MCP server, which authenticates a person rather than a project, is the only surface
+    that enumerates projects (list_projects).
+  operations:
+  - export_project
+  - all_project
+  - search
+  - get_users
+  - get_audit_log
+- name: Version
+  schema: Version
+  key: id
+  natural_key: slug
+  fields:
+  - id
+  - name
+  - slug
+  - published
+  - ordr
+  - created
+  - updated
+  operations:
+  - list_versions
+  - update_version
+  - clone_version
+  - get_version_report
+  - get_version_broken_links
+- name: Documentation
+  schema: Documentation
+  key: id
+  natural_key: slug
+  note: A documentation SECTION (product guides, iOS SDK, release notes), not a single document.
+  operations:
+  - list_documentation
+- name: Reference
+  schema: Reference
+  key: id
+  natural_key: title
+  note: >-
+    An API reference rendered from an uploaded OpenAPI specification. Title is the natural key
+    add_reference upserts on.
+  operations:
+  - add_reference
+  - read_reference_definition
+  - publish_reference
+- name: Page
+  schema: Page
+  key: id
+  natural_key: path (version slug / documentation slug / page slug)
+  fields:
+  - id
+  - title
+  - slug
+  - path
+  - listed
+  - contentDraft
+  - contentPublished
+  - created
+  - updated
+  operations:
+  - get_page
+  - read_page
+  - create_page
+  - update_page
+  - delete_page
+  - publish_page
+- name: ChangelogPost
+  schema: ChangelogPost
+  key: id
+  natural_key: slug
+  parent_key: changelog id (path parameter)
+  operations:
+  - create_changelog_post
+  - list_changelog_posts
+- name: User
+  schema: User
+  key: id
+  natural_key: email
+  operations:
+  - get_users
+- name: ReaderAccess
+  schema: ReaderAccess
+  key: email
+  note: >-
+    Has no id. The email address IS the key — create and revoke both address it by email, which is
+    what makes those two operations effectively set-valued.
+  operations:
+  - get_reader_access
+  - create_reader_access
+  - revoke_reader_access
+- name: Audit
+  schema: Audit
+  key: none
+  note: Append-only log envelope; enterprise plans only.
+  operations:
+  - get_audit_log
+- name: BrokenLink
+  schema: BrokenLink
+  key: none
+  note: >-
+    A finding, not a stored resource. Embeds a page object, a link object and a target object, and
+    carries a machine-readable `issue` code and a `severity` of error or warning.
+  operations:
+  - get_version_broken_links
+relationships:
+- from: Project
+  to: Version
+  type: has_many
+  via: implicit (key scope)
+- from: Version
+  to: Documentation
+  type: has_many
+  via: path /version/{id}/documentation
+- from: Version
+  to: Reference
+  type: has_many
+  via: path /version/{versionId}/reference
+- from: Documentation
+  to: Page
+  type: has_many
+  via: path /documentation/{id}/page
+- from: Page
+  to: Page
+  type: has_many
+  via: parent page id on create_page (pages nest)
+- from: Page
+  to: Documentation
+  type: belongs_to
+  via: documentation_id / documentation_slug query parameters on get_page
+- from: Page
+  to: Version
+  type: belongs_to
+  via: version_id / version_slug query parameters on get_page
+- from: Changelog
+  to: ChangelogPost
+  type: has_many
+  via: path /changelog/{id}/post
+- from: VersionReportPage
+  to: VersionReportUser
+  type: has_one
+  via: $ref on createdBy, updatedBy and sourceCreatedBy
+- from: Version
+  to: VersionReportPage
+  type: has_many
+  via: get_version_report response
+- from: Project
+  to: User
+  type: has_many
+  via: /users
+- from: Project
+  to: ReaderAccess
+  type: has_many
+  via: /reader-access
+aggregate_views:
+- schema: AllProject
+  operation: all_project
+  shape: >-
+    Four id-keyed dictionaries — page, documentation, reference, version — returned together. This
+    is the only response that exposes the whole graph in one call, and its dictionary keys are the
+    integer ids that join the four entity types.
+content_states:
+  detail: >-
+    Publication state is modelled on the object, not as a separate resource. A Page carries
+    contentDraft and contentPublished side by side (either can be null); Version and Documentation
+    carry `published`; Page carries `listed`; ChangelogPost carries `published`. This is what makes
+    the draft/publish rehearsal in conventions/ possible.

@@ -3,141 +3,204 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: DeveloperHub
 providerId: developerhub
+generated: '2026-09-06'
+method: searched
+source: https://developerhub.io/pricing
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-tags:
-  - API Reference
-  - Developer Portals
-  - Documentation
-  - Knowledge Base
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+modified: '2026-09-06'
+currency: USD
+billing:
+  periods:
+  - annual
+  - monthly
+  default: annual
+  note: >-
+    Headline prices are the annually-billed monthly rate; the monthly-billed rate is higher. The page
+    states annual billing saves $360 a year.
+trial:
+  offered: true
+  length_days: 14
+  card_required: false
+  note: >-
+    Every paid plan starts with a 14-day trial, no card required, and the trial runs the real AI
+    agent. A project that does not convert drops to Free rather than being deleted.
+description: >-
+  Published plans and pricing for the DeveloperHub.io documentation platform, read from the
+  provider's own pricing page on 2026-09-06. DeveloperHub prices the whole platform, not API calls:
+  no plan meters API requests, and the API's rate limits are per-operation rather than per-plan (see
+  rate-limits/developerhub-rate-limits.yml). Plan boundaries that DO reach the API are capability
+  gates — the OpenAPI marks export_project and get_audit_log as enterprise-only, and API references
+  (and therefore the reference upload/publish operations) are unavailable on Free. This file
+  replaces a 2026-05-04 scaffold whose tiers, quotas and overage prices were invented.
+plan_count: 4
 plans:
-  - id: developerhub-free
-    name: Free
-    type: freemium
-    description: Free entry tier for the DeveloperHub API surface. Intended for evaluation, prototyping,
-      and low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: DeveloperHub Documentation Platform
-  - id: developerhub-pro
-    name: Professional
-    type: paid
-    description: Production tier for DeveloperHub. Provides higher quotas, priority support, and access
-      to the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
-    entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains: []
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: global
-        domains: []
-        unit: 1000
-        price: TBD
-        userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: DeveloperHub Documentation Platform
-  - id: developerhub-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for DeveloperHub. Includes dedicated capacity, contractual SLAs,
-      security review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains: []
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: DeveloperHub Documentation Platform
+- id: developerhub-free
+  name: Free
+  type: freemium
+  tagline: Trying it out
+  price: '0.00'
+  period: indefinite
+  description: >-
+    One documentation section, hosted on a DeveloperHub subdomain. No card, no expiry.
+  entries:
+  - label: Editors
+    name: editors
+    type: quota
+    metric: editors
+    limit: 1
+  - label: Published versions
+    name: versions
+    type: quota
+    metric: versions
+    limit: 1
+  - label: Documentation sections
+    name: documentation_sections
+    type: quota
+    metric: documentation_sections
+    limit: 1
+  - label: API references
+    name: api_references
+    type: quota
+    metric: api_references
+    limit: 0
+  - label: Pages
+    name: pages
+    type: quota
+    metric: pages
+    limit: -1
+  - label: Readers
+    name: readers
+    type: quota
+    metric: readers
+    limit: -1
+  elements:
+  - name: All four user roles
+  - name: Host on a DeveloperHub subdomain
+  - name: GitHub sync
+  - name: Changelogs
+  excludes:
+  - Custom domain
+  - AI features
+  - Lightning fast search
+  - OpenAPI editor, viewer and API playground
+- id: developerhub-plus
+  name: Plus
+  type: paid
+  tagline: Small teams
+  price: '99.00'
+  period: month
+  billed: annually
+  price_monthly_billing: '129.00'
+  description: Your own domain, as many versions and documentations as you need, and the AI Agent.
+  entries:
+  - label: Editors
+    name: editors
+    type: quota
+    metric: editors
+    limit: 5
+  - label: Versions
+    name: versions
+    type: quota
+    metric: versions
+    limit: -1
+  - label: Documentation sections
+    name: documentation_sections
+    type: quota
+    metric: documentation_sections
+    limit: -1
+  - label: API references
+    name: api_references
+    type: quota
+    metric: api_references
+    limit: -1
+  - label: AI credits
+    name: ai_credits
+    type: quota
+    metric: ai_credits
+    limit: 1025
+    timeFrame: month
+  elements:
+  - name: Custom domain and subdirectory hosting
+  - name: Lightning fast search
+  - name: AI features
+  - name: OpenAPI editor, viewer and API playground
+  - name: Glossary
+  - name: Personalised docs
+  excludes:
+  - White-labelling
+  - Custom CSS, JS and HEAD tags
+  - AI Assistant, analytics and feedback
+- id: developerhub-pro
+  name: Pro
+  type: paid
+  tagline: Full control
+  price: '199.00'
+  period: month
+  billed: annually
+  price_monthly_billing: '229.00'
+  most_popular: true
+  description: The AI Assistant, analytics, custom code and your branding instead of ours.
+  entries:
+  - label: Editors
+    name: editors
+    type: quota
+    metric: editors
+    limit: 20
+  - label: AI credits
+    name: ai_credits
+    type: quota
+    metric: ai_credits
+    limit: 1800
+    timeFrame: month
+  elements:
+  - name: Everything in Plus
+  - name: White-labelled
+  - name: AI Assistant for readers
+  - name: Search analytics and reader feedback
+  - name: Custom CSS, JS, HEAD tags and footer
+  - name: Custom landing pages and 404
+  - name: Migration support
+  - name: PDF export (add-on)
+- id: developerhub-enterprise
+  name: Enterprise
+  type: enterprise
+  tagline: Scale without limits
+  price: custom
+  price_floor: '499.00'
+  period: month
+  billed: annually
+  description: Custom contracts, SLAs, and dedicated support for large organisations.
+  entries:
+  - label: Editors
+    name: editors
+    type: quota
+    metric: editors
+    limit: -1
+    note: custom editor and project count
+  - label: AI credits
+    name: ai_credits
+    type: quota
+    metric: ai_credits
+    limit: -1
+    note: custom allowance
+  elements:
+  - name: Everything in Pro
+  - name: SAML SSO
+  - name: Multi-project search
+  - name: PDF export
+  - name: Export APIs and audit log
+  - name: Custom invoicing and SLA
+  - name: Professional migration services
+  api_gated_features:
+  - operationId: export_project
+    note: 'OpenAPI description: Only available in enterprise plans.'
+  - operationId: get_audit_log
+    note: 'OpenAPI description: Only available in enterprise plans.'
+overage:
+  published: false
+  note: >-
+    No overage or metered pricing is published. Plans are flat seat/feature tiers; AI credits are a
+    monthly allowance with no stated per-credit overage price.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

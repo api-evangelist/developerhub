@@ -6,7 +6,12 @@ description: >-
   features auto-generated API documentation from OpenAPI specifications,
   built-in versioning, full-text search, custom domains, and a WYSIWYG editor.
   DeveloperHub provides a complete developer portal solution with support for
-  multiple documentation projects, custom branding, and SEO optimization.
+  multiple documentation projects, custom branding, and SEO optimization. The
+  platform is itself programmable: a published OpenAPI 3.2 contract covers 25
+  operations for pages, versions, documentation sections, API references,
+  reader access, project export and changelog posts, and two first-party remote
+  MCP servers expose the same surface to agents — a read-only reader server on
+  every customer's docs site and an OAuth-protected editor server.
 type: Index
 deliveryModel:
   model: saas
@@ -23,28 +28,33 @@ deliveryModel:
 accessModel:
   pricing: freemium
   onboarding: self-serve
-  trial: false
+  trial: true
   try_now: true
-  public: false
-  label: Freemium · Self-serve signup
-  confidence: medium
+  public: true
+  label: Freemium · Self-serve signup · 14-day trial, no card
+  confidence: high
   source:
   - plans
   - authentication
   - security
-  generated: '2026-09-03'
-  method: derived
+  generated: '2026-09-06'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/developerhub.png
 tags:
   - API Reference
   - Developer Portals
   - Documentation
   - Knowledge Base
+  - OpenAPI
+  - Docs as Code
+  - Model Context Protocol
+  - Agent Skills
 url: >-
   https://raw.githubusercontent.com/api-evangelist/developerhub/refs/heads/main/apis.yml
 created: '2026-03-25'
-modified: '2026-04-28'
+modified: '2026-09-06'
 specificationVersion: '0.23'
+position: Producing
 apis:
 - aid: developerhub:platform
   name: DeveloperHub Documentation Platform
@@ -53,6 +63,7 @@ apis:
     auto-generated from OpenAPI specs, user guides with a WYSIWYG editor, versioned documentation, full-text
     search, and customizable developer portals with custom domains and branding.
   humanURL: https://developerhub.io
+  baseURL: https://api.developerhub.io/api/v1
   tags:
   - Developer Portals
   - Documentation
@@ -61,8 +72,10 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.developerhub.io
-  - type: Features
-    url: https://developerhub.io/features
+  - type: APIReference
+    url: https://docs.developerhub.io/api/ref
+  - type: GettingStarted
+    url: https://docs.developerhub.io/support-center/getting-started
   - type: API Editor
     url: https://app.developerhub.io/api-editor
   - type: Community
@@ -71,91 +84,207 @@ apis:
     url: https://status.developerhub.io
 - aid: developerhub:developerhub-documentation-api
   name: DeveloperHub Documentation API
-  description: The Documentation API from DeveloperHub — 1 operation(s) for documentation.
-  humanURL: https://developerhub.io
+  description: >-
+    Lists the documentation sections inside a version of a DeveloperHub project — 1 operation.
+  humanURL: https://docs.developerhub.io/api/ref
+  baseURL: https://api.developerhub.io/api/v1
   tags:
   - Documentation
   properties:
   - type: OpenAPI
     url: openapi/developerhub-documentation-api-openapi.yml
+  - type: Overlay
+    url: overlays/developerhub-documentation-api-overlay.yaml
 - aid: developerhub:developerhub-pages-api
   name: DeveloperHub Pages API
-  description: The Pages API from DeveloperHub — 4 operation(s) for pages.
-  humanURL: https://developerhub.io
+  description: >-
+    Creates, reads, updates, publishes and deletes documentation pages, with Markdoc bodies staged as
+    drafts until an explicit publish — 6 operations.
+  humanURL: https://docs.developerhub.io/api/ref
+  baseURL: https://api.developerhub.io/api/v1
   tags:
   - Pages
   properties:
   - type: OpenAPI
     url: openapi/developerhub-pages-api-openapi.yml
+  - type: Overlay
+    url: overlays/developerhub-pages-api-overlay.yaml
 - aid: developerhub:developerhub-project-api
   name: DeveloperHub Project API
-  description: The Project API from DeveloperHub — 5 operation(s) for project.
-  humanURL: https://developerhub.io
+  description: >-
+    Project-level operations — export, search, whole-project dump, audit log and users. Export and audit
+    are enterprise-plan only — 5 operations.
+  humanURL: https://docs.developerhub.io/api/ref
+  baseURL: https://api.developerhub.io/api/v1
   tags:
   - Project
   properties:
   - type: OpenAPI
     url: openapi/developerhub-project-api-openapi.yml
+  - type: Overlay
+    url: overlays/developerhub-project-api-overlay.yaml
 - aid: developerhub:developerhub-reader-access-api
   name: DeveloperHub Reader Access API
-  description: The Reader Access API from DeveloperHub — 1 operation(s) for reader access.
-  humanURL: https://developerhub.io
+  description: >-
+    Grants, lists and revokes access for invited readers of a private documentation project, keyed on
+    email address — 3 operations.
+  humanURL: https://docs.developerhub.io/api/ref
+  baseURL: https://api.developerhub.io/api/v1
   tags:
   - Reader Access
   properties:
   - type: OpenAPI
     url: openapi/developerhub-reader-access-api-openapi.yml
+  - type: Overlay
+    url: overlays/developerhub-reader-access-api-overlay.yaml
 - aid: developerhub:developerhub-references-api
   name: DeveloperHub References API
-  description: The References API from DeveloperHub — 3 operation(s) for references.
-  humanURL: https://developerhub.io
+  description: >-
+    Uploads, downloads and publishes the OpenAPI specification behind an API reference — the CI/CD
+    surface, and the one replay-safe write in the API — 3 operations.
+  humanURL: https://docs.developerhub.io/api/ref
+  baseURL: https://api.developerhub.io/api/v1
   tags:
   - References
+  - OpenAPI
   properties:
   - type: OpenAPI
     url: openapi/developerhub-references-api-openapi.yml
+  - type: Overlay
+    url: overlays/developerhub-references-api-overlay.yaml
 - aid: developerhub:developerhub-versions-api
   name: DeveloperHub Versions API
-  description: The Versions API from DeveloperHub — 2 operation(s) for versions.
-  humanURL: https://developerhub.io
+  description: >-
+    Lists, updates, clones and reports on documentation versions, including a broken-link check for the
+    whole version — 5 operations.
+  humanURL: https://docs.developerhub.io/api/ref
+  baseURL: https://api.developerhub.io/api/v1
   tags:
   - Versions
   properties:
   - type: OpenAPI
     url: openapi/developerhub-versions-api-openapi.yml
+  - type: Overlay
+    url: overlays/developerhub-versions-api-overlay.yaml
+- aid: developerhub:developerhub-changelog-api
+  name: DeveloperHub Changelog API
+  description: >-
+    Creates and lists changelog posts from Markdoc content, with cursor pagination and named API-key
+    permissions (changelog.edit, changelog.read) — 2 operations.
+  humanURL: https://docs.developerhub.io/api/ref
+  baseURL: https://api.developerhub.io/api/v1
+  tags:
+  - Changelog
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-changelog-api-openapi.yml
+  - type: Overlay
+    url: overlays/developerhub-changelog-api-overlay.yaml
+- aid: developerhub:developerhub-mcp
+  name: DeveloperHub MCP Servers
+  description: >-
+    Two first-party remote MCP servers over Streamable HTTP. The reader server runs at the /mcp route of
+    every customer docs site and exposes one read-only search tool anonymously; the editor server at
+    ai.developerhub.io/mcp is OAuth-protected and exposes 22 tools that find, write, publish and delete
+    pages and replace an API reference's OpenAPI spec.
+  humanURL: https://docs.developerhub.io/support-center/mcp-server
+  baseURL: https://ai.developerhub.io/mcp
+  tags:
+  - Model Context Protocol
+  - Agents
+  properties:
+  - type: MCPServer
+    url: mcp/developerhub-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/developerhub-tool-crosswalk.yml
+  - type: Documentation
+    url: https://docs.developerhub.io/support-center/editor-mcp-server
 common:
   - type: AgenticAccess
     url: agentic-access/developerhub-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/developerhub-vulnerability-disclosure.yml
+  - type: Security
+    url: security/developerhub-vulnerability-disclosure.yml
   - type: DomainSecurity
     url: security/developerhub-domain-security.yml
   - type: Authentication
     url: authentication/developerhub-authentication.yml
+  - type: OAuthScopes
+    url: scopes/developerhub-scopes.yml
+  - type: MCPServer
+    url: mcp/developerhub-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/developerhub-tool-crosswalk.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Packages
+    url: packages/developerhub-packages.yml
+  - type: WellKnown
+    url: well-known/developerhub-well-known.yml
+  - type: Conventions
+    url: conventions/developerhub-conventions.yml
+  - type: Idempotency
+    url: conventions/developerhub-conventions.yml
+  - type: ErrorCatalog
+    url: errors/developerhub-problem-types.yml
+  - type: Conformance
+    url: conformance/developerhub-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/developerhub-lifecycle.yml
+  - type: ChangeLog
+    url: changelog/developerhub-changelog.yml
+  - type: DataModel
+    url: data-model/developerhub-data-model.yml
+  - type: Sandbox
+    url: sandbox/developerhub-sandbox.yml
+  - type: Plans
+    url: plans/developerhub-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/developerhub-rate-limits.yml
+  - type: FinOps
+    url: finops/developerhub-finops.yml
+  - type: LLMsTxt
+    url: llms/developerhub-llms.txt
+  - type: StatusPage
+    url: https://status.developerhub.io
+  - type: Roadmap
+    url: https://docs.developerhub.io/support-center/upcoming-features
   - type: GitHubOrganization
     url: https://github.com/developerhub-io
   - type: LinkedIn
     url: https://www.linkedin.com/company/developer-hub
   - type: Website
     url: https://developerhub.io
+  - type: DeveloperPortal
+    url: https://docs.developerhub.io
   - type: Documentation
     url: https://docs.developerhub.io
+  - type: APIReference
+    url: https://docs.developerhub.io/api/ref
+  - type: GettingStarted
+    url: https://docs.developerhub.io/support-center/getting-started
   - type: Pricing
     url: https://developerhub.io/pricing
   - type: Blog
     url: https://developerhub.io/blog
   - type: Login
     url: https://app.developerhub.io
-  - type: Signup
+  - type: SignUp
     url: https://app.developerhub.io/signup
   - type: Support
-    url: https://developerhub.io/contact
+    url: https://docs.developerhub.io/support-center/contact-us
+  - type: HelpCenter
+    url: https://talk.developerhub.io
   - type: PrivacyPolicy
     url: https://developerhub.io/privacy
   - type: TermsOfService
     url: https://developerhub.io/terms
-  - type: LlmsText
-    url: https://docs.developerhub.io/llms.txt
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 29
+  pass: local-v3
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

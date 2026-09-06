@@ -1,0 +1,200 @@
+generated: '2026-09-06'
+method: derived
+source: >-
+  mcp/developerhub-mcp.yml (Reader tools probed live; Editor tools from the provider's published
+  tool table) bound against openapi/_original/developerhub-openapi.yml
+provider: DeveloperHub
+providerId: developerhub
+note: >-
+  The Editor MCP server's live schemas are OAuth-gated, so every Editor row is bound by name and
+  documented semantics rather than by an introspected inputSchema — confidence is set accordingly.
+  The Reader server's single tool was read from a live tools/list and its binding is exact.
+surfaces:
+  openapi:
+    file: openapi/_original/developerhub-openapi.yml
+    version: 1.1.0
+    servers:
+    - https://api.developerhub.io/api/v1
+    auth: X-Api-Key header
+    gated: false
+  mcp:
+  - url: https://docs.developerhub.io/mcp
+    role: reader
+    gated: false
+  - url: https://ai.developerhub.io/mcp
+    role: editor
+    gated: true
+    gate: OAuth 2.0, scope "editor"
+  graphql: null
+crosswalk:
+- tool: search
+  server: reader
+  category: search
+  rest:
+  - search
+  binding: 1:1
+  confidence: medium
+  note: >-
+    Both run a relevance search over a project's content, but the MCP tool searches the PUBLISHED
+    docs of the site it is mounted on while GET /search searches the project the API key belongs to.
+- tool: list_versions
+  server: editor
+  category: version
+  rest:
+  - list_versions
+  binding: 1:1
+  confidence: high
+- tool: clone_version
+  server: editor
+  category: version
+  rest:
+  - clone_version
+  binding: 1:1
+  confidence: high
+- tool: list_documentation_sections
+  server: editor
+  category: documentation
+  rest:
+  - list_documentation
+  binding: 1:1
+  confidence: high
+- tool: list_api_references
+  server: editor
+  category: reference
+  rest:
+  - all_project
+  binding: partial
+  confidence: low
+  note: >-
+    No dedicated REST list-references operation. GET /all returns every page, documentation section,
+    API reference and version in the project, so the reference list is a subset of its response.
+- tool: list_pages
+  server: editor
+  category: page
+  rest:
+  - all_project
+  binding: partial
+  confidence: low
+  note: GET /all returns the pages; there is no REST list-pages operation with title/slug filters.
+- tool: find_page_by_slug
+  server: editor
+  category: page
+  rest:
+  - get_page
+  binding: 1:1
+  confidence: high
+  note: GET /page resolves a page from page_slug plus version and documentation slugs or ids.
+- tool: search_pages
+  server: editor
+  category: search
+  rest:
+  - search
+  binding: 1:1
+  confidence: high
+- tool: get_page
+  server: editor
+  category: page
+  rest:
+  - read_page
+  binding: 1:1
+  confidence: high
+- tool: create_page
+  server: editor
+  category: page
+  rest:
+  - create_page
+  binding: 1:1
+  confidence: high
+- tool: edit_page
+  server: editor
+  category: page
+  rest:
+  - update_page
+  binding: 1:1
+  confidence: high
+- tool: publish_page
+  server: editor
+  category: page
+  rest:
+  - publish_page
+  binding: 1:1
+  confidence: high
+- tool: delete_page
+  server: editor
+  category: page
+  rest:
+  - delete_page
+  binding: 1:1
+  confidence: high
+- tool: edit_api_reference
+  server: editor
+  category: reference
+  rest:
+  - add_reference
+  binding: 1:1
+  confidence: medium
+  note: >-
+    POST /version/{versionId}/reference upserts on reference title and replaces the draft
+    specification, which is what the tool describes.
+- tool: check_broken_links
+  server: editor
+  category: version
+  rest:
+  - get_version_broken_links
+  binding: 1:1
+  confidence: high
+  note: The REST operation is version-scoped; the tool also accepts a single page.
+mcp_only:
+- tool: list_projects
+  reason: No REST operation enumerates projects — a DeveloperHub API key is already project-scoped.
+- tool: find_text
+  reason: Exact-text search across drafts has no REST equivalent; GET /search is relevance-ranked.
+- tool: get_markdoc_syntax
+  reason: Returns the Markdoc dialect reference; a client-side aid with no API surface behind it.
+- tool: list_audiences
+  reason: Audiences for adaptive content are not exposed by the v1 REST API.
+- tool: validate_markdoc
+  reason: Dry-run validation of a body; no REST validation endpoint exists.
+- tool: get_search_analytics
+  reason: Search analytics are not exposed by the v1 REST API.
+- tool: get_project_feedback
+  reason: Reader feedback is not exposed by the v1 REST API.
+- tool: get_page_feedback
+  reason: Reader feedback is not exposed by the v1 REST API.
+rest_only:
+- operationId: update_version
+  reason: Publish/unpublish a version — no MCP tool exposes it.
+- operationId: get_version_report
+  reason: Per-page creation and last-update report — no MCP tool.
+- operationId: read_reference_definition
+  reason: Download the raw reference specification — no MCP tool.
+- operationId: publish_reference
+  reason: Publish a draft API reference — no MCP tool.
+- operationId: export_project
+  reason: Enterprise project export — no MCP tool.
+- operationId: all_project
+  reason: Whole-project dump; only partially surfaced through list_pages / list_api_references.
+- operationId: get_audit_log
+  reason: Enterprise audit log — no MCP tool.
+- operationId: get_users
+  reason: Project users and roles — no MCP tool.
+- operationId: get_reader_access
+  reason: Reader invite listing — no MCP tool.
+- operationId: create_reader_access
+  reason: Grant reader access — no MCP tool.
+- operationId: revoke_reader_access
+  reason: Revoke reader access — no MCP tool.
+- operationId: create_changelog_post
+  reason: Create a changelog post — no MCP tool.
+- operationId: list_changelog_posts
+  reason: List changelog posts — no MCP tool.
+coverage:
+  mcp_tools_total: 23
+  mcp_tools_bound: 15
+  mcp_tools_only: 8
+  rest_operations_total: 25
+  rest_operations_bound: 12
+  rest_operations_only: 13
+  bound_high_confidence: 11
+  bound_medium_confidence: 3
+  bound_low_confidence: 2

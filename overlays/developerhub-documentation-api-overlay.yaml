@@ -1,0 +1,28 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — DeveloperHub.io Documentation API
+  version: 1.0.0
+extends: developerhub-documentation-api-openapi.yml
+x-generated: '2026-09-06'
+x-method: generated
+x-source: derived from the operation descriptions in the extended document; no content invented
+actions:
+- target: $.info
+  description: Attach the provider API reference as externalDocs and record the harvest source.
+  update:
+    x-apis-io-source: https://docs.developerhub.io/api.md
+    x-apis-io-harvested: '2026-09-06'
+- target: $
+  description: Add externalDocs pointing at the provider API reference.
+  update:
+    externalDocs:
+      description: DeveloperHub API reference
+      url: https://docs.developerhub.io/api/ref
+- target: $.paths['/version/{id}/documentation'].get
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 60
+      window: 60 minutes
+      scope: api-key
+      source: operation description

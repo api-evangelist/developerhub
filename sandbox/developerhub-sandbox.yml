@@ -1,0 +1,67 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://developerhub.io/pricing , https://app.developerhub.io/api-editor ,
+  https://docs.developerhub.io/support-center/try-it-out ,
+  https://docs.developerhub.io/support-center/reader-mcp-server
+provider: DeveloperHub
+providerId: developerhub
+summary: >-
+  DeveloperHub publishes no test-mode API. There is no sandbox host, no test key prefix, no fixture
+  or trigger tooling and no time simulation — a key issued in the platform is a live key against the
+  live project, and the only safe rehearsal is the draft/publish model inside the API itself. What
+  DeveloperHub does offer instead is three no-cost ways to exercise the product before committing.
+test_mode:
+  available: false
+  key_prefixes: null
+  test_host: null
+  note: >-
+    One base URL, https://api.developerhub.io/api/v1, and one kind of key. No test/live separation is
+    documented.
+test_data:
+  test_cards: null
+  fixtures: null
+  triggers: null
+  time_simulation: null
+  note: Not a payments or scheduling API; none of these apply.
+consoles:
+- name: API Playground (Try It Out)
+  kind: in-docs request console
+  url: https://docs.developerhub.io/support-center/try-it-out
+  auth_required: false
+  note: >-
+    The console DeveloperHub renders inside a customer's API reference. It sends real requests, and
+    supports custom interceptors registered with window.registerCustomInterceptor to modify a
+    request before it is sent. Available on Plus and above.
+- name: API Editor
+  kind: free hosted OpenAPI design and preview tool
+  url: https://app.developerhub.io/api-editor
+  auth_required: false
+  probed_status: 200
+  note: Listed on the site as a free tool — design and preview an OpenAPI spec without an account.
+- name: Reader MCP Server
+  kind: anonymous live agent surface
+  url: https://docs.developerhub.io/mcp
+  auth_required: false
+  probed_status: 200
+  note: >-
+    DeveloperHub's own docs site runs the reader MCP server, and the docs explicitly invite you to
+    "test out our own MCP Server before enabling it on your docs". An agent can call the `search`
+    tool against it right now with no credential, which makes it the closest thing this provider has
+    to a public sandbox.
+free_access:
+  free_plan: true
+  free_plan_detail: One documentation section on a DeveloperHub subdomain, indefinitely, with no card.
+  trial_days: 14
+  trial_card_required: false
+  trial_detail: >-
+    Every paid plan starts with a 14-day trial that runs the real AI agent rather than a
+    demonstration of one; a project that does not convert drops to Free rather than being deleted.
+  cross_reference: plans/developerhub-plans-pricing.yml
+rehearsal_in_api:
+  detail: >-
+    In place of a sandbox, writes are staged. create_page produces an unpublished page; update_page
+    writes to the page's draft; add_reference accepts publish=false to import a specification as a
+    draft. Publication is always a separate explicit call (publish_page, publish_reference,
+    update_version). Title and slug changes are NOT staged, and delete_page is irreversible.
+  cross_reference: conventions/developerhub-conventions.yml

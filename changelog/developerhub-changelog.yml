@@ -1,0 +1,197 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.developerhub.io/product-updates/rss.xml
+provider: DeveloperHub
+providerId: developerhub
+url: https://docs.developerhub.io/product-updates
+feed: https://docs.developerhub.io/product-updates/rss.xml
+feed_format: rss-2.0
+scheme: dated
+scheme_note: Entries are titled by date, not by release number. The API contract carries its own semantic
+  version (OpenAPI info.version 1.1.0); the changelog does not reference it. Each entry labels its items
+  New, Improvement or Bug Fix.
+current_api_version: 1.1.0
+entries_available: 655
+entries_captured: 12
+window: twelve most recent entries as of 2026-09-06
+cadence: near-daily
+latest: '2026-09-05'
+oldest_captured: '2026-08-18'
+breaking_changes_in_window: 0
+breaking_change_note: No entry in the captured window is labelled breaking; the feed has no breaking-change
+  label.
+entries:
+- date: '2026-09-05'
+  title: 5 September 2026
+  link: https://docs.developerhub.io/product-updates?post=5-september-2026
+  additions:
+  - 'New Conditional Content : A public docs site can now identify readers from a signed link, so audiences
+    and conditional content work without putting your documentation behind a login. Readers who arrive
+    without a token simply see the public documentation. See Conditional Content .'
+  improvements:
+  - 'Improvement AI Assistant : Answers now draw on the documentation each reader is entitled to see,
+    so an identified reader can find audience-gated content by asking rather than only by following a
+    link. See AI Assistant .'
+  fixes: []
+  breaking: []
+- date: '2026-09-03'
+  title: 3 September 2026
+  link: https://docs.developerhub.io/product-updates?post=3-september-2026
+  additions:
+  - 'New GitHub Sync : A sync paused by a change that would have removed most of your documentation can
+    now be sorted out from the Docs Sync pane. Fix the repository and click Check the repository again
+    , or click Apply the change anyway if you meant it. We also email whoever pushed the commit when a
+    syn'
+  improvements: []
+  fixes: []
+  breaking: []
+- date: '2026-09-02'
+  title: 2 September 2026
+  link: https://docs.developerhub.io/product-updates?post=2-september-2026
+  additions:
+  - 'New GitHub Sync : Deleting a file from your repository no longer removes the content behind it for
+    good. Pages are hidden, and versions, documentation sections and API references come off your site,
+    but restoring the file within 30 days brings it all back where it was. See GitHub Sync .'
+  improvements:
+  - 'Improvement AI Assistant : Answers now link the pages they draw on, and opening one keeps the conversation
+    beside it instead of reloading the site. See AI Assistant .'
+  fixes: []
+  breaking: []
+- date: '2026-08-31'
+  title: 31 August 2026
+  link: https://docs.developerhub.io/product-updates?post=31-august-2026
+  additions: []
+  improvements:
+  - 'Improvement Reader : Pages load faster with fewer assets to download.'
+  fixes: []
+  breaking: []
+- date: '2026-08-30'
+  title: 30 August 2026
+  link: https://docs.developerhub.io/product-updates?post=30-august-2026
+  additions:
+  - 'New AI Agents : An assistant fetching one of your pages because someone asked it about your docs
+    now reads the page as markdown rather than the app shell, and a documentation section''s URL answers
+    with the pages inside it. It rides the Enable llms.txt setting you already have. See llms.txt .'
+  improvements: []
+  fixes:
+  - 'Bug Fix Editor : Opening a link to a project you are not a member of now tells you so and opens one
+    of your own, instead of quietly opening a different project and then reporting the page as missing.'
+  breaking: []
+- date: '2026-08-29'
+  title: 29 August 2026
+  link: https://docs.developerhub.io/product-updates?post=29-august-2026
+  additions:
+  - 'New Organisation Settings : An organisation can now share its HEAD tags and its footer, not just
+    its CSS. Write them once under Customisation , then turn on Use organisation HEAD tags or Use organisation
+    footer in each project that should pick them up. See Organisation Settings .'
+  improvements:
+  - 'Improvement AI Agent : The agent can now find where a class or function is defined in your attached
+    code, not only where it is mentioned. See Self-Updating Docs .'
+  fixes: []
+  breaking: []
+- date: '2026-08-26'
+  title: 26 August 2026
+  link: https://docs.developerhub.io/product-updates?post=26-august-2026
+  additions: []
+  improvements:
+  - 'Improvement Theme : A new project now starts on the light theme instead of the dark one. Projects
+    you already have keep the theme they are on, and you can still switch either way from Project Settings
+    → Customisation . See Theme .'
+  fixes: []
+  breaking: []
+- date: '2026-08-25'
+  title: 25 August 2026
+  link: https://docs.developerhub.io/product-updates?post=25-august-2026
+  additions:
+  - 'New Integrations : DeveloperHub is now on the Zendesk Marketplace. Install DeveloperHub Docs and
+    your support agents search your published documentation from the ticket sidebar, then drop a link
+    to the matching page into their reply, without leaving the ticket. See Zendesk .'
+  - 'New Import from Mintlify : Move a Mintlify site into DeveloperHub straight from its GitHub repository.
+    Choose which versions and languages come over, and your pages, images and API references arrive with
+    them. See Import from Mintlify .'
+  improvements:
+  - 'Improvement Import & Export : The pane is now two boards, Bring content in and Take content out .
+    Every source sits at the same depth, so Markdoc, Markdown, Readme, Zendesk and Mintlify are each one
+    click, and every row says what it needs from you before you open it. See Importing Documentation .'
+  fixes:
+  - 'Bug Fix PDF Export : A numbered list that carries on after an image, callout or code block keeps
+    its numbering in the exported PDF.'
+  breaking: []
+- date: '2026-08-24'
+  title: 24 August 2026
+  link: https://docs.developerhub.io/product-updates?post=24-august-2026
+  additions:
+  - 'New Tables : A long table can pin its header row so it stays in view while the rest of it scrolls.
+    Right-click a cell and select Pin header row while scrolling . See Tables .'
+  - 'New Documentation Index : Move several entries at once. Click one, hold Shift and click another,
+    and the whole run drags together. See Structuring Documentation .'
+  improvements: []
+  fixes: []
+  breaking: []
+- date: '2026-08-20'
+  title: 20 August 2026
+  link: https://docs.developerhub.io/product-updates?post=20-august-2026
+  additions:
+  - 'New Feedback : Ask the agent about your readers. It can now read the ratings and comments they left
+    on your pages, and Analyse with AI in the feedback inbox opens it with the question ready to send.
+    See Feedback and AI Agent .'
+  - 'New AI Agent : The AI Editor shows the model your runs use beside your credit balance, and admins
+    can select it to change it. See AI Agent .'
+  - 'New Docs Digest : The broken links report has grown into the docs digest, one email covering broken
+    links, searches that found nothing, reader feedback, drafts still unpublished and comments nobody
+    has resolved. Each section opens AI Agent with the request already written, and admins pick how often '
+  - 'New AI Agent : The agent can set a page''s search keywords, so the terms readers typed and found
+    nothing for can be added to the page that should have answered them. See Page Keywords .'
+  improvements:
+  - 'Improvement AI Agent : The examples on a new conversation are selectable. Pick one to fill the message
+    box, then send it as it is or edit it first.'
+  - 'Improvement AI Agent : Remembered preferences are now remembered rules, and cover what to never do
+    as well as what to always do, such as leaving a section alone or where to look first when a topic
+    comes up. Ask the agent to drop one and it does. See AI Agent .'
+  - 'Improvement Emails : Every email DeveloperHub sends has been redesigned on one shared layout, and
+    now shows a written summary in your inbox instead of the first words of the body. Bold text, headings
+    and links are legible in dark mode again.'
+  - 'Improvement Self-Updating Docs : A Watch the setup video link on the settings pane walks through
+    connecting a repository. See Self-Updating Docs .'
+  fixes:
+  - 'Bug Fix AI Agent : Asked to write up what shipped on a day your changelog already has a post for,
+    the agent adds to that post instead of starting a second one. See Changelogs .'
+  breaking: []
+- date: '2026-08-19'
+  title: 19 August 2026
+  link: https://docs.developerhub.io/product-updates?post=19-august-2026
+  additions:
+  - 'New Project Settings : You can now take the version picker out of your published docs'' top navigation,
+    so a project that only ever has one version doesn''t show a dropdown for it. Switch it on under Project
+    Settings → Customisation → Look and feel , and the preview beside it shows the result before y'
+  improvements: []
+  fixes: []
+  breaking: []
+- date: '2026-08-18'
+  title: 18 August 2026
+  link: https://docs.developerhub.io/product-updates?post=18-august-2026
+  additions:
+  - 'New AI Agent : A run now keeps going while you are away. Come back to it and you rejoin the turn
+    as it happens, with a Running tag marking it in your conversation list. See AI Agent .'
+  - 'New Customisation : You can now publish your documentation without the DeveloperHub branding on it.
+    Switch on Remove DeveloperHub branding under Project Settings → Customisation → Look and feel . See
+    Customising Visuals .'
+  - 'New AI Agent : Tell the agent a standing preference in a conversation, such as always using British
+    spelling, and it remembers it for the project and follows it on every run. Take one back with Forget
+    on the row that recorded it, or from the Remembered preferences card in settings. See AI Agent .'
+  improvements:
+  - 'Improvement Self-Updating Docs : You can leave the page while a newly added code repository is fetched.
+    If the fetch fails, it stays attached and tells you why instead of disappearing. See Self-Updating
+    Docs .'
+  - 'Improvement Self-Updating Docs : The check on a pull request links to the run as soon as it starts,
+    so you can follow the agent while it reads. See Checking pull requests .'
+  - 'Improvement AI Agent : A reply now appears as it is written, thinking included, rather than behind
+    a spinner. If the model you picked is busy, the run carries on with the closest one available and
+    tells you so.'
+  fixes:
+  - 'Bug Fix Self-Updating Docs : The Branch row no longer goes blank when your repository''s default
+    branch is not called main , and an attached repository stops reporting Cannot be read when it is perfectly
+    readable.'
+  - 'Bug Fix Reader : Headings on your published pages are links again. Select one to jump to that section
+    and get a link straight to it.'
+  breaking: []

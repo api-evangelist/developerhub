@@ -1,15 +1,84 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/developerhub-openapi.yml
+generated: '2026-09-06'
+method: searched
+source: >-
+  https://docs.developerhub.io/support-center/api-key ,
+  https://docs.developerhub.io/support-center/editor-mcp-server ,
+  https://ai.developerhub.io/.well-known/oauth-authorization-server ,
+  openapi/_original/developerhub-openapi.yml ; live unauthenticated responses observed against
+  https://api.developerhub.io/api/v1/version on 2026-09-06
+provider: DeveloperHub
+providerId: developerhub
 summary:
   types:
   - apiKey
+  - oauth2
   api_key_in:
   - header
+  surfaces: 2
+  note: >-
+    Two authentication surfaces, one per product. The v1 REST API is API-key only. The hosted Editor
+    MCP server is OAuth 2.0 only and has no key at all — "There is no key to create or share out."
 schemes:
-- name: ApiKeyAuth
+- name: Api-Key
   type: apiKey
   in: header
   parameter: X-Api-Key
+  surface: https://api.developerhub.io/api/v1
+  description: >-
+    Generate an API Key from the DeveloperHub.io platform (https://app.developerhub.io) and provide
+    it in the header, e.g. --header "X-Api-Key: <api-key>", for all requests requiring this
+    authentication.
+  issuance: Project Settings → API Keys. Keys are per project, and each key carries its own permission set.
+  rotation: >-
+    Not documented. The docs describe generating and copying a key; no rotation, expiry or
+    last-used signal is published.
+  permissions_documented:
+  - changelog.edit
+  - changelog.read
+  permissions_note: >-
+    The docs say "Each API Key can have different permissions. Consult the API to know which
+    permissions you need", but only the two changelog operations name their permission in the
+    contract. There is no published permissions reference page.
+  transport: TLS only
+  applied_to: all 25 operations (top-level security requirement)
+  docs: https://docs.developerhub.io/support-center/api-key
+  observed:
+  - request: GET https://api.developerhub.io/api/v1/version with no key
+    status: 403
+    body: '{"error":{"message":"No API Key was provided. Read our API Reference at https://docs.developerhub.io/api","httpCode":403,"code":403}}'
+  - request: GET https://api.developerhub.io/api/v1/version with an invalid key
+    status: 400
+    body: '{"error":{"message":"API Key is invalid","httpCode":400,"code":0}}'
   sources:
-  - openapi/developerhub-openapi.yml
+  - openapi/_original/developerhub-openapi.yml
+- name: Editor MCP OAuth
+  type: oauth2
+  flow: authorization_code
+  pkce: S256
+  surface: https://ai.developerhub.io/mcp
+  issuer: https://ai.developerhub.io/
+  authorization_endpoint: https://ai.developerhub.io/authorize
+  token_endpoint: https://ai.developerhub.io/token
+  registration_endpoint: https://ai.developerhub.io/register
+  dynamic_client_registration: true
+  scopes:
+  - editor
+  description: >-
+    Each editor connects with their own DeveloperHub account and the agent acts as that person, so
+    it reaches only the projects they can already edit and only those with the Editor MCP server
+    turned on. The first connection opens a browser consent page naming the client, the account and
+    the address the approval is sent to. The connection lasts as long as the DeveloperHub login.
+  observed:
+  - request: POST https://ai.developerhub.io/mcp with no token
+    status: 401
+    www_authenticate: 'Bearer resource_metadata="https://ai.developerhub.io/.well-known/oauth-protected-resource"'
+    body: '{"error":"invalid_token","error_description":"Missing editor access token"}'
+  docs: https://docs.developerhub.io/support-center/editor-mcp-server
+  cross_reference: scopes/developerhub-scopes.yml
+reader_authentication:
+  note: >-
+    Distinct from API authentication: DeveloperHub also authenticates READERS of a customer's docs
+    site (custom login, magic-link email invite, reader SSO, and a ?jwt= query parameter). The REST
+    API touches this through get_reader_access / create_reader_access / revoke_reader_access, which
+    manage invited readers by email address.
+  docs: https://docs.developerhub.io/support-center/private-docs

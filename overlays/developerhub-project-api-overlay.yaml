@@ -1,0 +1,60 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — DeveloperHub.io Documentation Project API
+  version: 1.0.0
+extends: developerhub-project-api-openapi.yml
+x-generated: '2026-09-06'
+x-method: generated
+x-source: derived from the operation descriptions in the extended document; no content invented
+actions:
+- target: $.info
+  description: Attach the provider API reference as externalDocs and record the harvest source.
+  update:
+    x-apis-io-source: https://docs.developerhub.io/api.md
+    x-apis-io-harvested: '2026-09-06'
+- target: $
+  description: Add externalDocs pointing at the provider API reference.
+  update:
+    externalDocs:
+      description: DeveloperHub API reference
+      url: https://docs.developerhub.io/api/ref
+- target: $.paths['/export'].get
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 10
+      window: 60 minutes
+      scope: api-key
+      source: operation description
+- target: $.paths['/search'].get
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 10800
+      window: 60 minutes
+      scope: api-key
+      source: operation description
+- target: $.paths['/all'].get
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 30
+      window: 60 minutes
+      scope: api-key
+      source: operation description
+- target: $.paths['/audit'].get
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 600
+      window: 60 minutes
+      scope: api-key
+      source: operation description
+- target: $.paths['/users'].get
+  description: Lift the rate limit stated in the operation description into a machine-readable extension.
+  update:
+    x-rate-limit:
+      requests: 3600
+      window: 60 minutes
+      scope: api-key
+      source: operation description

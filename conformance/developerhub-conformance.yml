@@ -1,0 +1,120 @@
+generated: '2026-09-06'
+method: searched
+source: >-
+  openapi/_original/developerhub-openapi.yml ,
+  https://ai.developerhub.io/.well-known/oauth-authorization-server ,
+  https://ai.developerhub.io/.well-known/oauth-protected-resource ,
+  https://developerhub.io/security , https://developerhub.io/sub-processors ,
+  https://docs.developerhub.io/support-center/editor-mcp-server ,
+  https://docs.developerhub.io/support-center/llms-txt
+provider: DeveloperHub
+providerId: developerhub
+conformance:
+- id: openapi-3.2
+  name: OpenAPI 3.2.0
+  conforms: true
+  evidence: >-
+    The provider publishes its own contract at https://docs.developerhub.io/api.md declaring
+    openapi: 3.2.0, info.version 1.1.0, 20 paths and 25 operations.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  version: '2025-06-18'
+  evidence: >-
+    initialize against https://docs.developerhub.io/mcp returned 200 with protocolVersion
+    "2025-06-18" and serverInfo "DeveloperHub.io MCP" 0.1.0; tools/list returned a tool with a
+    draft-07 inputSchema. Streamable HTTP transport on both the reader and editor servers.
+- id: oauth2
+  name: OAuth 2.0 authorization code with PKCE
+  conforms: true
+  evidence: >-
+    https://ai.developerhub.io/.well-known/oauth-authorization-server declares
+    authorization_code + refresh_token grants and S256 code challenge.
+- id: rfc8414
+  name: 'RFC 8414: OAuth 2.0 Authorization Server Metadata'
+  conforms: true
+  evidence: https://ai.developerhub.io/.well-known/oauth-authorization-server returned 200 with a conformant document.
+- id: rfc9728
+  name: 'RFC 9728: OAuth 2.0 Protected Resource Metadata'
+  conforms: true
+  evidence: >-
+    https://ai.developerhub.io/.well-known/oauth-protected-resource returned 200, and an
+    unauthenticated POST to https://ai.developerhub.io/mcp returned 401 with
+    WWW-Authenticate: Bearer resource_metadata="https://ai.developerhub.io/.well-known/oauth-protected-resource".
+- id: rfc7591
+  name: 'RFC 7591: OAuth 2.0 Dynamic Client Registration'
+  conforms: true
+  evidence: registration_endpoint https://ai.developerhub.io/register declared in the authorization-server metadata.
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: >-
+    https://docs.developerhub.io/llms.txt returns 165 lines of text/plain; DeveloperHub also ships
+    llms.txt generation as a product feature (https://docs.developerhub.io/support-center/llms-txt).
+- id: agent-skills
+  name: Agent Skills (portable Markdown + YAML frontmatter)
+  conforms: true
+  evidence: >-
+    https://github.com/developerhub-io/dh-skills publishes write-markdoc and organize-docs-repo in
+    the portable Agent Skills format, released to npm as @developerhub/dh-skills 1.4.0.
+- id: rfc9457
+  name: 'RFC 9457: Problem Details for HTTP APIs'
+  conforms: false
+  evidence: >-
+    No operation returns application/problem+json. Errors use a vendor envelope
+    {"error":{"message","httpCode","code"}} — see errors/developerhub-problem-types.yml.
+- id: rfc8594
+  name: 'RFC 8594: Sunset HTTP Header'
+  conforms: false
+  evidence: No Sunset or Deprecation header appears in the contract, and no deprecation policy is published.
+- id: idempotency
+  name: Idempotency-Key
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header anywhere. One write (add_reference) is replay-safe through a
+    natural-key upsert on reference title — see conventions/developerhub-conventions.yml.
+- id: pagination
+  name: Cursor pagination
+  conforms: partial
+  conforms_bool: false
+  evidence: >-
+    Only list_changelog_posts paginates (count max 50, cursor in and out). Every other collection
+    operation returns the full set.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: >-
+    No /.well-known/openid-configuration on any host. DeveloperHub sells SAML SSO (Enterprise) and
+    reader SSO as product features, but publishes no OIDC discovery document.
+- id: gdpr
+  name: GDPR / EU data residency
+  conforms: true
+  evidence: >-
+    https://developerhub.io/security states all services and data are hosted in AWS facilities in
+    Ireland; https://developerhub.io/sub-processors publishes the sub-processor list. Company
+    registered in England and Wales, No. 11501681.
+domain_standard:
+  market: developer documentation / API reference hosting
+  standard: OpenAPI
+  declared: true
+  evidence: >-
+    The product's core function is ingesting and rendering OpenAPI, and the API exposes it as a
+    first-class resource: POST /version/{versionId}/reference uploads a specification file,
+    GET /reference/{id}/definition downloads "the raw specification of an API reference in JSON or
+    YAML", and PUT /reference/{id}/publish publishes it. The Editor MCP server exposes the same
+    capability as edit_api_reference, described as replacing "the draft OpenAPI spec of an API
+    reference". DeveloperHub also documents OpenAPI extensions it honours at
+    https://docs.developerhub.io/support-center/openapi-extensions .
+  note: >-
+    This is the domain standard for this market and DeveloperHub speaks it in its contract, not only
+    in its marketing.
+certifications:
+  published: false
+  named: []
+  note: >-
+    https://developerhub.io/security publishes a security posture — AWS Ireland, own VPC with
+    network ACLs, TLS/SSL only with an "A" Qualys SSL Labs rating, AES-256 at rest, SHA-512
+    credential storage, daily Aurora backups, 99.9%+ 12-month uptime, AI security review of every
+    feature — and a responsible-disclosure contact, but names NO third-party certification. There is
+    no SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP claim anywhere on the site, and no trust centre.
+    No `Compliance` pointer is emitted, because there is no published compliance programme to point at.
