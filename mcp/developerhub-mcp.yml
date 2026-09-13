@@ -1,30 +1,31 @@
 generated: '2026-09-06'
 method: probed
-source: >-
-  https://docs.developerhub.io/support-center/mcp-server.md ,
-  https://docs.developerhub.io/support-center/reader-mcp-server.md ,
-  https://docs.developerhub.io/support-center/editor-mcp-server.md ; tools/list probed live against
+source: https://docs.developerhub.io/support-center/mcp-server.md , https://docs.developerhub.io/support-center/reader-mcp-server.md
+  , https://docs.developerhub.io/support-center/editor-mcp-server.md ; tools/list probed live against
   https://docs.developerhub.io/mcp on 2026-09-06
 provider: DeveloperHub
 providerId: developerhub
 status: published
-summary: >-
-  DeveloperHub ships TWO first-party remote MCP servers over Streamable HTTP. The Reader MCP server
-  runs on every customer's documentation site at the /mcp route of that site's docs URL and is
-  read-only; DeveloperHub runs its own instance at https://docs.developerhub.io/mcp, which answered
-  initialize and tools/list anonymously. The Editor MCP server is a single hosted endpoint at
-  https://ai.developerhub.io/mcp; it is OAuth-protected (RFC 9728 challenge on an unauthenticated
-  POST) and each editor connects as their own DeveloperHub account.
+summary: DeveloperHub ships TWO first-party remote MCP servers over Streamable HTTP. The Reader MCP server
+  runs on every customer's documentation site at the /mcp route of that site's docs URL and is read-only;
+  DeveloperHub runs its own instance at https://docs.developerhub.io/mcp, which answered initialize and
+  tools/list anonymously. The Editor MCP server is a single hosted endpoint at https://ai.developerhub.io/mcp;
+  it is OAuth-protected (RFC 9728 challenge on an unauthenticated POST) and each editor connects as their
+  own DeveloperHub account.
 deployment:
   mode: remote
   endpoint: https://ai.developerhub.io/mcp
   auth: oauth
   verified: probed
-  note: >-
-    Two remote endpoints, no stdio package. The Editor server (endpoint above) is the writable one
-    and is the endpoint an agent is told to add ("claude mcp add --transport http developerhub
-    https://ai.developerhub.io/mcp"). The Reader server is per-tenant at <docs-domain>/mcp;
-    DeveloperHub's own instance is https://docs.developerhub.io/mcp and needs no auth.
+  note: Two remote endpoints, no stdio package. The Editor server (endpoint above) is the writable one
+    and is the endpoint an agent is told to add ("claude mcp add --transport http developerhub https://ai.developerhub.io/mcp").
+    The Reader server is per-tenant at <docs-domain>/mcp; DeveloperHub's own instance is https://docs.developerhub.io/mcp
+    and needs no auth.
+  probe_prior: (never probed)
+  probe: gated
+  probe_why: RFC 9728 challenge on the MCP path only
+  checked: '2026-09-11'
+  source: claimed-backlog re-probe 2026-09-11
 servers:
 - name: DeveloperHub Reader MCP Server
   role: reader
@@ -49,9 +50,8 @@ servers:
   tools:
   - name: search
     title: Search documentation
-    description: >-
-      Search the documentation and return the most relevant excerpts for a query, each with its
-      source page title and link.
+    description: Search the documentation and return the most relevant excerpts for a query, each with
+      its source page title and link.
     input_schema_properties:
     - query
     annotations:
@@ -66,8 +66,7 @@ servers:
   auth: oauth
   auth_detail:
     challenge_status: 401
-    www_authenticate: >-
-      Bearer resource_metadata="https://ai.developerhub.io/.well-known/oauth-protected-resource"
+    www_authenticate: Bearer resource_metadata="https://ai.developerhub.io/.well-known/oauth-protected-resource"
     error: invalid_token
     error_description: Missing editor access token
     protected_resource: well-known/developerhub-oauth-protected-resource.json
@@ -75,15 +74,15 @@ servers:
     scopes:
     - editor
     dynamic_client_registration: https://ai.developerhub.io/register
-    note: >-
-      Live tool schemas are auth-gated. The tool list below is transcribed from the provider's own
-      published table at https://docs.developerhub.io/support-center/editor-mcp-server — names and
-      descriptions only; inputSchema requires an authenticated introspection.
-  install: 'claude mcp add --transport http developerhub https://ai.developerhub.io/mcp'
+    note: Live tool schemas are auth-gated. The tool list below is transcribed from the provider's own
+      published table at https://docs.developerhub.io/support-center/editor-mcp-server — names and descriptions
+      only; inputSchema requires an authenticated introspection.
+  install: claude mcp add --transport http developerhub https://ai.developerhub.io/mcp
   tools_source: docs-table
   tools:
   - name: list_projects
-    description: Lists the projects you can edit. Every other tool needs a project, so an agent starts here.
+    description: Lists the projects you can edit. Every other tool needs a project, so an agent starts
+      here.
   - name: list_versions
     description: Lists a project's versions.
   - name: clone_version
@@ -123,16 +122,13 @@ servers:
   - name: get_search_analytics
     description: Reads what readers search for in your published docs.
   - name: get_project_feedback
-    description: >-
-      Reads the feedback across a project: the totals, the best and worst rated pages, and recent
-      comments.
+    description: 'Reads the feedback across a project: the totals, the best and worst rated pages, and
+      recent comments.'
   - name: get_page_feedback
     description: Reads the ratings and comments on a single page.
   docs: https://docs.developerhub.io/support-center/editor-mcp-server
 safety_notes:
-- >-
-  delete_page on the Editor MCP server is irreversible; the agent must pass the page's current slug
-  back as confirmation, so it cannot delete a page it has not looked up.
-- >-
-  Body edits are written to a page draft and are invisible to readers until publish_page is called,
-  but title and slug changes are NOT drafted and take effect immediately on published pages.
+- delete_page on the Editor MCP server is irreversible; the agent must pass the page's current slug back
+  as confirmation, so it cannot delete a page it has not looked up.
+- Body edits are written to a page draft and are invisible to readers until publish_page is called, but
+  title and slug changes are NOT drafted and take effect immediately on published pages.
