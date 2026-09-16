@@ -47,6 +47,15 @@ tags:
   - Knowledge Base
   - OpenAPI
   - Docs as Code
+  - MCP
+  - Agent Skills
+tags_raw:
+  - API Reference
+  - Developer Portals
+  - Documentation
+  - Knowledge Base
+  - OpenAPI
+  - Docs as Code
   - Model Context Protocol
   - Agent Skills
 url: >-
@@ -95,20 +104,6 @@ apis:
     url: openapi/developerhub-documentation-api-openapi.yml
   - type: Overlay
     url: overlays/developerhub-documentation-api-overlay.yaml
-- aid: developerhub:developerhub-pages-api
-  name: DeveloperHub Pages API
-  description: >-
-    Creates, reads, updates, publishes and deletes documentation pages, with Markdoc bodies staged as
-    drafts until an explicit publish — 6 operations.
-  humanURL: https://docs.developerhub.io/api/ref
-  baseURL: https://api.developerhub.io/api/v1
-  tags:
-  - Pages
-  properties:
-  - type: OpenAPI
-    url: openapi/developerhub-pages-api-openapi.yml
-  - type: Overlay
-    url: overlays/developerhub-pages-api-overlay.yaml
 - aid: developerhub:developerhub-project-api
   name: DeveloperHub Project API
   description: >-
@@ -137,40 +132,11 @@ apis:
     url: openapi/developerhub-reader-access-api-openapi.yml
   - type: Overlay
     url: overlays/developerhub-reader-access-api-overlay.yaml
-- aid: developerhub:developerhub-references-api
-  name: DeveloperHub References API
-  description: >-
-    Uploads, downloads and publishes the OpenAPI specification behind an API reference — the CI/CD
-    surface, and the one replay-safe write in the API — 3 operations.
-  humanURL: https://docs.developerhub.io/api/ref
-  baseURL: https://api.developerhub.io/api/v1
-  tags:
-  - References
-  - OpenAPI
-  properties:
-  - type: OpenAPI
-    url: openapi/developerhub-references-api-openapi.yml
-  - type: Overlay
-    url: overlays/developerhub-references-api-overlay.yaml
-- aid: developerhub:developerhub-versions-api
-  name: DeveloperHub Versions API
-  description: >-
-    Lists, updates, clones and reports on documentation versions, including a broken-link check for the
-    whole version — 5 operations.
-  humanURL: https://docs.developerhub.io/api/ref
-  baseURL: https://api.developerhub.io/api/v1
-  tags:
-  - Versions
-  properties:
-  - type: OpenAPI
-    url: openapi/developerhub-versions-api-openapi.yml
-  - type: Overlay
-    url: overlays/developerhub-versions-api-overlay.yaml
 - aid: developerhub:developerhub-changelog-api
   name: DeveloperHub Changelog API
   description: >-
-    Creates and lists changelog posts from Markdoc content, with cursor pagination and named API-key
-    permissions (changelog.edit, changelog.read) — 2 operations.
+    Creates and lists changelog posts from Markdoc content, with cursor pagination and named API-key permissions
+    (changelog.edit, changelog.read) — 2 operations.
   humanURL: https://docs.developerhub.io/api/ref
   baseURL: https://api.developerhub.io/api/v1
   tags:
@@ -183,13 +149,16 @@ apis:
 - aid: developerhub:developerhub-mcp
   name: DeveloperHub MCP Servers
   description: >-
-    Two first-party remote MCP servers over Streamable HTTP. The reader server runs at the /mcp route of
-    every customer docs site and exposes one read-only search tool anonymously; the editor server at
+    Two first-party remote MCP servers over Streamable HTTP. The reader server runs at the /mcp route
+    of every customer docs site and exposes one read-only search tool anonymously; the editor server at
     ai.developerhub.io/mcp is OAuth-protected and exposes 22 tools that find, write, publish and delete
     pages and replace an API reference's OpenAPI spec.
   humanURL: https://docs.developerhub.io/support-center/mcp-server
   baseURL: https://ai.developerhub.io/mcp
   tags:
+  - MCP
+  - Agents
+  tags_raw:
   - Model Context Protocol
   - Agents
   properties:
@@ -199,7 +168,43 @@ apis:
     url: mcp/developerhub-tool-crosswalk.yml
   - type: Documentation
     url: https://docs.developerhub.io/support-center/editor-mcp-server
+- aid: developerhub:developerhub-page-api
+  name: DeveloperHub Page API
+  description: Operations for creating, reading, updating, publishing, and deleting pages.
+  humanURL: https://developerhub.io
+  baseURL: https://api.developerhub.io/api/v1
+  tags:
+  - Page
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-page-api-openapi.yml
+- aid: developerhub:developerhub-reference-api
+  name: DeveloperHub Reference API
+  description: Operations for adding, reading, and publishing API reference specifications.
+  humanURL: https://developerhub.io
+  baseURL: https://api.developerhub.io/api/v1
+  tags:
+  - Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-reference-api-openapi.yml
+- aid: developerhub:developerhub-version-api
+  name: DeveloperHub Version API
+  description: Operations for listing, updating, cloning, and reporting on project versions.
+  humanURL: https://developerhub.io
+  baseURL: https://api.developerhub.io/api/v1
+  tags:
+  - Version
+  properties:
+  - type: OpenAPI
+    url: openapi/developerhub-version-api-openapi.yml
 common:
+  - type: Overlay
+    url: overlays/developerhub-pages-api-overlay.yaml
+  - type: Overlay
+    url: overlays/developerhub-references-api-overlay.yaml
+  - type: Overlay
+    url: overlays/developerhub-versions-api-overlay.yaml
   - type: AgenticAccess
     url: agentic-access/developerhub-agentic-access.yml
   - type: VulnerabilityDisclosure
