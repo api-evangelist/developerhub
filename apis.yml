@@ -42,7 +42,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/developerhub.png
 tags:
   - API Reference
-  - Developer Portals
+  - Developer Portal
   - Documentation
   - Knowledge Base
   - OpenAPI
@@ -74,6 +74,11 @@ apis:
   humanURL: https://developerhub.io
   baseURL: https://api.developerhub.io/api/v1
   tags:
+  - Developer Portal
+  - Documentation
+  - Knowledge Base
+  - OpenAPI
+  tags_raw:
   - Developer Portals
   - Documentation
   - Knowledge Base
