@@ -1,12 +1,9 @@
 openapi: 3.2.0
 info:
-  title: DeveloperHub.io Documentation Pages API
-  description: API to manage your %product% resources programmatically. Using these APIs, you are able
-    to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  title: Page API
+  description: API to manage your %product% resources programmatically. Using these APIs, you are able to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  contact: {}
   version: 1.1.0
-  contact:
-    name: DeveloperHub
-    url: https://docs.developerhub.io/api/ref
 servers:
 - url: https://api.developerhub.io/api/v1
   variables: {}
@@ -21,15 +18,12 @@ paths:
       tags:
       - Page
       summary: Get page by slug
-      description: 'Get a page by slugs and read its content in [Markdoc](https://docs.developerhub.io/support-center/exporting-documentation#markdoc)
+      description: 'Get a page by slugs and read its content in Markdoc
 
         or a derived format. Rate limit: 60 in 1 minute.
 
 
-        Either `version_id` or `version_slug` must be provided. Either `documentation_id` or `documentation_slug`
-        must be provided.
-
-        '
+        Either `version_id` or `version_slug` must be provided. Either `documentation_id` or `documentation_slug` must be provided.'
       operationId: get_page
       parameters:
       - name: version_id
@@ -106,8 +100,7 @@ paths:
       tags:
       - Page
       summary: Read page
-      description: 'Read a page including its content in [Markdoc](https://docs.developerhub.io/support-center/exporting-documentation#markdoc)
-        or a derived format. Rate limit: 600 in 1 minute.'
+      description: 'Read a page including its content in Markdoc or a derived format. Rate limit: 600 in 1 minute.'
       operationId: read_page
       parameters:
       - name: id
@@ -285,8 +278,7 @@ paths:
       tags:
       - Page
       summary: Create a page
-      description: 'Creates a page with draft contents. To insert in a pre-existing category, set the
-        `categoryTitle`. Rate limit: 10800 in 1 hour.'
+      description: 'Creates a page with draft contents. To insert in a pre-existing category, set the `categoryTitle`. Rate limit: 10800 in 1 hour.'
       operationId: create_page
       parameters:
       - name: id
@@ -331,8 +323,7 @@ paths:
                     '
                 categoryTitle:
                   type: string
-                  description: To create the page inside a category, provide the pre-existing category
-                    title here (case insensitive). The page is added after the category's existing pages.
+                  description: To create the page inside a category, provide the pre-existing category title here (case insensitive). The page is added after the category's existing pages.
                   example: Installation
                 message:
                   type: string
@@ -422,22 +413,6 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
-  headers:
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
   schemas:
     AccessDenied:
       title: AccessDenied
@@ -458,6 +433,44 @@ components:
               type: number
               description: Internal error code
               example: 403
+    UnsupportedContentType:
+      title: UnsupportedContentType
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 415
+            code:
+              type: number
+              description: Internal error code
+              example: 415
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
     Page:
       title: Page
       required:
@@ -513,49 +526,25 @@ components:
           description: Published content in the selected format. Null if never published
           example: This is the page contents
       description: Page object
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
-    UnsupportedContentType:
-      title: UnsupportedContentType
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 415
-            code:
-              type: number
-              description: Internal error code
-              example: 415
+  headers:
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
   securitySchemes:
     Api-Key:
       type: apiKey
-      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and
-        provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests
-        requiring this authentication.'
+      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests requiring this authentication.'
       name: X-Api-Key
       in: header

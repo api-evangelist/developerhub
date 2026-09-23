@@ -1,12 +1,9 @@
 openapi: 3.2.0
 info:
-  title: DeveloperHub.io Changelog API
-  description: API to manage your %product% resources programmatically. Using these APIs, you are able
-    to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  title: Changelog API
+  description: API to manage your %product% resources programmatically. Using these APIs, you are able to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  contact: {}
   version: 1.1.0
-  contact:
-    name: DeveloperHub
-    url: https://docs.developerhub.io/api/ref
 servers:
 - url: https://api.developerhub.io/api/v1
   variables: {}
@@ -21,9 +18,7 @@ paths:
       tags:
       - Changelog
       summary: Create a changelog post
-      description: 'Creates a changelog post from Markdoc content, optionally publishing it immediately.
-        The slug is generated from the title if not provided. Permission: `changelog.edit`. Rate limit:
-        10800 in 1 hour.'
+      description: 'Creates a changelog post from Markdoc content, optionally publishing it immediately. The slug is generated from the title if not provided. Permission: `changelog.edit`. Rate limit: 10800 in 1 hour.'
       operationId: create_changelog_post
       parameters:
       - name: id
@@ -57,8 +52,7 @@ paths:
                     '
                 slug:
                   type: string
-                  description: Slug in the URL. Must match `^[a-zA-Z0-9-]+$`. Generated from the title
-                    if not provided
+                  description: Slug in the URL. Must match `^[a-zA-Z0-9-]+$`. Generated from the title if not provided
                   example: 26-may-2026
                 published:
                   type: boolean
@@ -110,8 +104,7 @@ paths:
       tags:
       - Changelog
       summary: List changelog posts
-      description: 'Lists a changelog''s posts, newest first. Returns the 10 most recent posts by default;
-        use `cursor` to page. Permission: `changelog.read`. Rate limit: 600 in 60 seconds.'
+      description: 'Lists a changelog''s posts, newest first. Returns the 10 most recent posts by default; use `cursor` to page. Permission: `changelog.read`. Rate limit: 600 in 60 seconds.'
       operationId: list_changelog_posts
       parameters:
       - name: id
@@ -163,23 +156,51 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
-  headers:
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
   schemas:
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
+    ChangelogPostList:
+      title: Changelog Post List
+      description: Paginated list of changelog posts
+      type: object
+      required:
+      - posts
+      - count
+      - total
+      - cursor
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangelogPost'
+        count:
+          type: integer
+          description: Number of posts retrieved
+          example: 10
+        total:
+          type: integer
+          description: Total number of posts in the changelog
+          example: 42
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: Cursor for next page of results. Null value if there are no more results
+          example: XAr
     AccessDenied:
       title: AccessDenied
       type: object
@@ -242,69 +263,6 @@ components:
           type: string
           description: Date of last update
           example: 2026-06-02T19:02:14+0000
-    ChangelogPostList:
-      title: Changelog Post List
-      description: Paginated list of changelog posts
-      type: object
-      required:
-      - posts
-      - count
-      - total
-      - cursor
-      properties:
-        posts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChangelogPost'
-        count:
-          type: integer
-          description: Number of posts retrieved
-          example: 10
-        total:
-          type: integer
-          description: Total number of posts in the changelog
-          example: 42
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: Cursor for next page of results. Null value if there are no more results
-          example: XAr
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
     UnsupportedContentType:
       title: UnsupportedContentType
       type: object
@@ -324,11 +282,44 @@ components:
               type: number
               description: Internal error code
               example: 415
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
+  headers:
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
   securitySchemes:
     Api-Key:
       type: apiKey
-      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and
-        provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests
-        requiring this authentication.'
+      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests requiring this authentication.'
       name: X-Api-Key
       in: header

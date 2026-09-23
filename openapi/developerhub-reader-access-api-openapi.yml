@@ -1,18 +1,16 @@
 openapi: 3.2.0
 info:
-  title: DeveloperHub.io Documentation Reader Access API
-  description: API to manage your %product% resources programmatically. Using these APIs, you are able
-    to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  title: Reader Access API
+  description: API to manage your %product% resources programmatically. Using these APIs, you are able to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  contact: {}
   version: 1.1.0
-  contact:
-    name: DeveloperHub
-    url: https://docs.developerhub.io/api/ref
 servers:
 - url: https://api.developerhub.io/api/v1
   variables: {}
 security:
 - Api-Key: []
-tags: []
+tags:
+- name: Reader Access
 paths:
   /reader-access:
     get:
@@ -61,8 +59,7 @@ paths:
       tags:
       - Reader Access
       summary: Grant access to reader
-      description: 'Grants access to reader. Only applicable when project is protected by "Email Invite".
-        Rate limit: 100 in 60 minutes.'
+      description: 'Grants access to reader. Only applicable when project is protected by "Email Invite". Rate limit: 100 in 60 minutes.'
       operationId: create_reader_access
       requestBody:
         required: true
@@ -171,23 +168,23 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
-  headers:
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
   schemas:
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
     AccessDenied:
       title: AccessDenied
       type: object
@@ -207,22 +204,6 @@ components:
               type: number
               description: Internal error code
               example: 403
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
     ReaderAccess:
       title: Reader Access
       description: Reader Access
@@ -253,25 +234,6 @@ components:
           - 'null'
           description: Date when revoked. Null if not revoked.
           example: 2022-03-22T20:02:15+0000
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
     UnsupportedContentType:
       title: UnsupportedContentType
       type: object
@@ -291,11 +253,44 @@ components:
               type: number
               description: Internal error code
               example: 415
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
+  headers:
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
   securitySchemes:
     Api-Key:
       type: apiKey
-      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and
-        provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests
-        requiring this authentication.'
+      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests requiring this authentication.'
       name: X-Api-Key
       in: header

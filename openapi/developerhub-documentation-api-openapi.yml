@@ -1,12 +1,9 @@
 openapi: 3.2.0
 info:
-  title: DeveloperHub.io Documentation API
-  description: API to manage your %product% resources programmatically. Using these APIs, you are able
-    to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  title: Documentation API
+  description: API to manage your %product% resources programmatically. Using these APIs, you are able to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  contact: {}
   version: 1.1.0
-  contact:
-    name: DeveloperHub
-    url: https://docs.developerhub.io/api/ref
 servers:
 - url: https://api.developerhub.io/api/v1
   variables: {}
@@ -61,22 +58,6 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
-  headers:
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
   schemas:
     AccessDenied:
       title: AccessDenied
@@ -97,6 +78,25 @@ components:
               type: number
               description: Internal error code
               example: 403
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
     Documentation:
       title: Documentation
       required:
@@ -178,30 +178,25 @@ components:
           description: True if navigation categories are expandable
           example: false
       description: Documentation section object
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
+  headers:
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
   securitySchemes:
     Api-Key:
       type: apiKey
-      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and
-        provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests
-        requiring this authentication.'
+      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests requiring this authentication.'
       name: X-Api-Key
       in: header

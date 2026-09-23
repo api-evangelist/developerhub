@@ -1,32 +1,32 @@
 {
   "provider": "developerhub",
   "sources": [
-    "developerhub-documentation-api-openapi.yml",
-    "developerhub-pages-api-openapi.yml",
-    "developerhub-project-api-openapi.yml",
-    "developerhub-reader-access-api-openapi.yml",
-    "developerhub-references-api-openapi.yml",
-    "developerhub-versions-api-openapi.yml"
+    "_original/developerhub-openapi.yml"
   ],
   "outputs": [
+    "developerhub-changelog-api-openapi.yml",
     "developerhub-documentation-api-openapi.yml",
-    "developerhub-pages-api-openapi.yml",
+    "developerhub-page-api-openapi.yml",
     "developerhub-project-api-openapi.yml",
     "developerhub-reader-access-api-openapi.yml",
-    "developerhub-references-api-openapi.yml",
-    "developerhub-versions-api-openapi.yml"
+    "developerhub-reference-api-openapi.yml",
+    "developerhub-version-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
-    "developerhub-documentation-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "developerhub-pages-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "developerhub-project-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "developerhub-reader-access-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "developerhub-references-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "developerhub-versions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "developerhub-openapi.yml: declared missing tag: Reader Access",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "developerhub-changelog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "developerhub-documentation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "developerhub-page-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "developerhub-project-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "developerhub-reader-access-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "developerhub-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "developerhub-version-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

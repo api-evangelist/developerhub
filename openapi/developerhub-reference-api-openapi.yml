@@ -1,12 +1,9 @@
 openapi: 3.2.0
 info:
-  title: DeveloperHub.io API References API
-  description: API to manage your %product% resources programmatically. Using these APIs, you are able
-    to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  title: Reference API
+  description: API to manage your %product% resources programmatically. Using these APIs, you are able to manage pages, integrate with CI/CD, and retrieve resources among other operations.
+  contact: {}
   version: 1.1.0
-  contact:
-    name: DeveloperHub
-    url: https://docs.developerhub.io/api/ref
 servers:
 - url: https://api.developerhub.io/api/v1
   variables: {}
@@ -21,8 +18,7 @@ paths:
       tags:
       - Reference
       summary: Adds or updates a reference specification
-      description: 'Adds or updates a reference specification in that version. If the reference title
-        matches one that already existed, then it is updated. Rate limit: 300 in 60 minutes.'
+      description: 'Adds or updates a reference specification in that version. If the reference title matches one that already existed, then it is updated. Rate limit: 300 in 60 minutes.'
       operationId: add_reference
       parameters:
       - name: versionId
@@ -34,8 +30,7 @@ paths:
           type: string
       - name: publish
         in: query
-        description: Publish the specification immediately. Set to false to import it as a draft to be
-          published later.
+        description: Publish the specification immediately. Set to false to import it as a draft to be published later.
         required: false
         schema:
           type: boolean
@@ -110,8 +105,7 @@ paths:
       tags:
       - Reference
       summary: Read a reference specification
-      description: 'Downloads the raw specification of an API reference in JSON or YAML. Rate limit: 600
-        in 1 minute.'
+      description: 'Downloads the raw specification of an API reference in JSON or YAML. Rate limit: 600 in 1 minute.'
       operationId: read_reference_definition
       parameters:
       - name: id
@@ -129,8 +123,7 @@ paths:
           default: false
       - name: format
         in: query
-        description: Format of the returned specification. `auto` returns it as originally uploaded; `json`
-          and `yaml` convert it if needed.
+        description: Format of the returned specification. `auto` returns it as originally uploaded; `json` and `yaml` convert it if needed.
         required: false
         schema:
           type: string
@@ -182,8 +175,7 @@ paths:
       tags:
       - Reference
       summary: Publish a reference draft
-      description: 'Publishes the draft specification of an API reference. Fails if the reference has
-        no draft. Rate limit: 300 in 60 minutes.'
+      description: 'Publishes the draft specification of an API reference. Fails if the reference has no draft. Rate limit: 300 in 60 minutes.'
       operationId: publish_reference
       parameters:
       - name: id
@@ -226,23 +218,23 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
-  headers:
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
   schemas:
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
     AccessDenied:
       title: AccessDenied
       type: object
@@ -262,22 +254,6 @@ components:
               type: number
               description: Internal error code
               example: 403
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
     Reference:
       title: Reference
       required:
@@ -333,11 +309,25 @@ components:
               type: number
               description: Internal error code
               example: 9
+  headers:
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
   securitySchemes:
     Api-Key:
       type: apiKey
-      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and
-        provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests
-        requiring this authentication.'
+      description: 'Generate an API Key from [DeveloperHub.io platform](https://app.developerhub.io) and provide it in the header such as `--header "X-Api-Key: <api-key>"` for cURL for all the requests requiring this authentication.'
       name: X-Api-Key
       in: header
