@@ -1,0 +1,234 @@
+# Vendor facets — DeveloperHub. A hosted docs and developer-portal platform: an OpenAPI reference
+# with try-it, guides, changelogs, versioning, landing pages and AI tooling, server-side rendered.
+# The headline: solid portal pointers and an auto-generated llms.txt. Its MCP server is for
+# AUTHORS editing docs from Claude, Cursor or Codex, not for agents calling the API, so it earns
+# nothing on mcp_server.
+vendor: developerhub
+name: DeveloperHub
+website: https://developerhub.io
+areas:
+- developer-portal
+registry_keys:
+- developerhub
+rubric_schema_version: 0.22.0
+generated: '2026-09-25'
+features_refreshed: '2026-09-25'
+basis: capability
+summary: >-
+  DeveloperHub lifts the portal pointers: portal, documentation, API reference, changelog and a try-it
+  console, each once declared in apis.yml. It renders server-side, so pages are readable without JavaScript,
+  which avoids the SPA-shell trap that hides other portals. Its llms.txt is generated automatically, refreshes
+  every six hours and cannot be edited (llms-full.txt is not supported). It counts only when served on
+  the provider's own domain. Its MCP server is an authoring tool, so a provider on DeveloperHub has no
+  reader-facing MCP server from it. Nothing here writes to the contract: the reference renders whatever
+  examples and errors the OpenAPI has.
+features:
+- id: api-reference
+  name: API reference from OpenAPI with try-it
+  description: A reference generated from OpenAPI with a request playground supporting auth and OAuth
+    2.0.
+  source: https://developerhub.io/
+  tier: all
+- id: guides
+  name: Guides and product documentation
+  description: >-
+    Authored guides with versioning, localization, a block-based landing page designer and GitHub two-way
+    sync.
+  source: https://developerhub.io/
+  tier: all
+- id: changelogs
+  name: Changelogs
+  description: Changelog pages as part of the docs project.
+  source: https://developerhub.io/
+  tier: all
+- id: ssr-hosting
+  name: Server-side rendering on a custom domain or subdirectory
+  description: >-
+    Docs are server-rendered and can be hosted on a custom domain or under a subdirectory behind a reverse
+    proxy.
+  source: https://docs.developerhub.io/support-center/hosting
+  tier: all
+- id: llms-txt
+  name: Auto-generated llms.txt and Markdown pages
+  description: >-
+    Generates /llms.txt at the project base path every six hours (no llms-full.txt), and serves page Markdown
+    at a .md suffix when enabled.
+  source: https://docs.developerhub.io/support-center/llms-txt
+  tier: all
+- id: authoring-mcp
+  name: MCP server for authoring
+  description: >-
+    Connects Claude, Cursor or Codex to the docs project so writers can read and write documentation from
+    those tools.
+  source: https://developerhub.io/ai
+  tier: unknown
+- id: ai-assistant
+  name: AI Assistant for readers
+  description: Reader-facing answers cited from the project's own pages.
+  source: https://developerhub.io/ai
+  tier: unknown
+maps:
+- feature: guides
+  check: portal_present
+  layer: composite
+  provider_must: Declare the site as a DeveloperPortal entry in apis.yml.
+  catalog_pass_rate: 0.228
+  facet: developer_ergonomics
+  points: 4
+  baseline_pass_rate: 0.633
+- feature: guides
+  check: documentation_present
+  layer: composite
+  provider_must: Declare the guides as a Documentation entry.
+  catalog_pass_rate: 0.453
+  facet: developer_ergonomics
+  points: 4
+  baseline_pass_rate: 0.95
+  saturated: true
+  saturated_note: >-
+    95% of providers with a contract, docs and a reference already earn this; the vendor cannot move it
+    for most of its buyers.
+- feature: api-reference
+  check: api_reference_present
+  layer: composite
+  provider_must: Declare the reference as an APIReference entry.
+  catalog_pass_rate: 0.222
+  facet: developer_ergonomics
+  points: 3
+  baseline_pass_rate: 0.942
+  saturated: true
+  saturated_note: >-
+    94% of providers with a contract, docs and a reference already earn this; the vendor cannot move it
+    for most of its buyers.
+- feature: api-reference
+  check: console_or_sandbox
+  layer: composite
+  provider_must: Declare the try-it playground as a Console or Playground entry.
+  catalog_pass_rate: 0.089
+  facet: developer_ergonomics
+  points: 3
+  baseline_pass_rate: 0.332
+- feature: changelogs
+  check: change_log_present
+  layer: composite
+  provider_must: Maintain the changelog and declare it as a ChangeLog entry.
+  catalog_pass_rate: 0.157
+  facet: operational_transparency
+  points: 6
+  baseline_pass_rate: 0.438
+- feature: llms-txt
+  check: llms_txt_published
+  layer: composite
+  conditional: true
+  condition: >-
+    Only when the project is served on the provider's own domain (a custom domain or a subdirectory).
+    The file sits at the project URL, and on a DeveloperHub-hosted URL it is not the provider's surface.
+  note: >-
+    It is generated from the provider's own docs and cannot be edited. On the provider's domain, format
+    rule 2 credits it in full.
+  catalog_pass_rate: 0.351
+  facet: discoverability
+  points: 4
+  baseline_pass_rate: 0.65
+earns_nothing:
+- feature: authoring-mcp
+  check: mcp_server
+  layer: agent_readiness
+  why: >-
+    The server lets writers edit docs from an AI client. It does not expose the provider's API to agents.
+- feature: ai-assistant
+  check: agent_skills
+  layer: agent_readiness
+  why: A reader chat assistant is not a skills artifact.
+- feature: api-reference
+  check: examples_present
+  why: The reference renders the examples the OpenAPI already has and adds none.
+out_of_reach:
+  checks:
+  - sdk_count_1
+  - sdk_count_3
+  - cli_present
+  - contract_present
+  - overlay_published
+  - status_page_present
+  - rate_limits_documented
+  - well_known_published
+  - spec_presence
+  note: >-
+    A docs platform renders the contract. It does not generate SDKs or CLIs, or write, host or improve
+    the OpenAPI.
+unscored_practice:
+- feature: llms-txt
+  why: >-
+    Per-page Markdown twins (.md) served to AI assistants while crawlers get HTML. The rubric has no markdown-twin
+    check.
+surface:
+  discoverability:
+    reachable: 4.0
+    total: 54
+  operational_transparency:
+    reachable: 6.0
+    total: 38
+  developer_ergonomics:
+    reachable: 14.0
+    total: 42
+  agent_readiness:
+    reachable: 0
+    total: 139
+hard_rule: >-
+  A model, not a score. Adopting this vendor changes a provider's Kin Score only when the provider publishes
+  the resulting artifacts on its own surface; nothing here writes a score, and no sponsorship or partnership
+  can.
+method: searched
+source:
+- https://developerhub.io/
+- https://developerhub.io/ai
+- https://docs.developerhub.io/support-center/hosting
+- https://docs.developerhub.io/support-center/llms-txt
+measured:
+  cohort:
+    method: vendors-catalog.json detections (CNAME / header / URL shape / markup), never a name match
+    detected: 1
+    in_baseline: 0
+  control:
+    basis: providers earning contract_present + documentation_present + api_reference_present, minus the
+      cohort
+    n: 5216
+  metric: >-
+    cohort_pct / control_pct = mean share of the check's points earned (derived and platform credit weighted),
+    x100
+  measured_on: '2026-09-25'
+  status: 'not measurable: 0 detected customers clear the baseline (need 20)'
+simulation:
+  simulated_on: '2026-09-25'
+  rubric: 0.23.0
+  population: providers publishing a contract (contract_present earned), replayable exactly
+  providers: 8977
+  providers_unreplayable: 987
+  providers_moved: 8292
+  conditional_rows: excluded (they depend on what the API already does)
+  composite_lift:
+    median: 4.7
+    p75: 6.1
+    p90: 6.8
+    max: 8.8
+    mean_among_movers: 4.6
+  agent_readiness_lift:
+    median: 0.0
+    p75: 0.0
+    p90: 0.0
+    max: 0.0
+    mean_among_movers: 0.0
+  facet_lift_median_among_movers:
+    operational_transparency: 15.8
+    developer_ergonomics: 16.6
+  composite_band_moves:
+    thin -> developing: 1736
+    developing -> strong: 655
+    emerging -> thin: 367
+    strong -> exemplar: 121
+    minimal -> emerging: 3
+  agent_readiness_band_moves: {}
+  method: >-
+    each provider's own kin/checks file, the vendor's maps at their stated credit, the scorer's composite
+    formula; from -> to, nothing written

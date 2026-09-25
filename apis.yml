@@ -204,6 +204,8 @@ apis:
   - type: OpenAPI
     url: openapi/developerhub-version-api-openapi.yml
 common:
+  - type: VendorFacets
+    url: vendor-facets/developerhub-vendor-facets.yml
   - type: Overlay
     url: overlays/developerhub-pages-api-overlay.yaml
   - type: Overlay
