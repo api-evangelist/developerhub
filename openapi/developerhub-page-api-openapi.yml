@@ -414,25 +414,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    AccessDenied:
-      title: AccessDenied
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Access Denied
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 403
-            code:
-              type: number
-              description: Internal error code
-              example: 403
     UnsupportedContentType:
       title: UnsupportedContentType
       type: object
@@ -452,25 +433,6 @@ components:
               type: number
               description: Internal error code
               example: 415
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
     Page:
       title: Page
       required:
@@ -526,12 +488,45 @@ components:
           description: Published content in the selected format. Null if never published
           example: This is the page contents
       description: Page object
+    AccessDenied:
+      title: AccessDenied
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: Access Denied
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 403
+            code:
+              type: number
+              description: Internal error code
+              example: 403
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
   headers:
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
     X-RateLimit-Remaining:
       description: Requests consumed in current period
       schema:
@@ -542,6 +537,11 @@ components:
       schema:
         type: integer
         example: 1611530395
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
   securitySchemes:
     Api-Key:
       type: apiKey
