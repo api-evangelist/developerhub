@@ -414,8 +414,8 @@ paths:
       deprecated: false
 components:
   schemas:
-    UnsupportedContentType:
-      title: UnsupportedContentType
+    TooManyRequests:
+      title: TooManyRequests
       type: object
       properties:
         error:
@@ -424,15 +424,15 @@ components:
             message:
               type: string
               description: Message of the error
-              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
+              example: You exceeded the rate limit
             httpCode:
               type: number
               description: HTTP code returned
-              example: 415
+              example: 429
             code:
               type: number
               description: Internal error code
-              example: 415
+              example: 9
     Page:
       title: Page
       required:
@@ -507,8 +507,8 @@ components:
               type: number
               description: Internal error code
               example: 403
-    TooManyRequests:
-      title: TooManyRequests
+    UnsupportedContentType:
+      title: UnsupportedContentType
       type: object
       properties:
         error:
@@ -517,26 +517,26 @@ components:
             message:
               type: string
               description: Message of the error
-              example: You exceeded the rate limit
+              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
             httpCode:
               type: number
               description: HTTP code returned
-              example: 429
+              example: 415
             code:
               type: number
               description: Internal error code
-              example: 9
+              example: 415
   headers:
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
     X-RateLimit-Reset:
       description: Unix timestamp at which requests consumed will reset
       schema:
         type: integer
         example: 1611530395
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
     X-RateLimit-Limit:
       description: Requests permitted until reset time
       schema:

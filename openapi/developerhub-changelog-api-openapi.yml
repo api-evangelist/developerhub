@@ -157,88 +157,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    UnsupportedContentType:
-      title: UnsupportedContentType
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 415
-            code:
-              type: number
-              description: Internal error code
-              example: 415
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
-    AccessDenied:
-      title: AccessDenied
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Access Denied
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 403
-            code:
-              type: number
-              description: Internal error code
-              example: 403
-    ChangelogPostList:
-      title: Changelog Post List
-      description: Paginated list of changelog posts
-      type: object
-      required:
-      - posts
-      - count
-      - total
-      - cursor
-      properties:
-        posts:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChangelogPost'
-        count:
-          type: integer
-          description: Number of posts retrieved
-          example: 10
-        total:
-          type: integer
-          description: Total number of posts in the changelog
-          example: 42
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: Cursor for next page of results. Null value if there are no more results
-          example: XAr
     TooManyRequests:
       title: TooManyRequests
       type: object
@@ -258,6 +176,25 @@ components:
               type: number
               description: Internal error code
               example: 9
+    AccessDenied:
+      title: AccessDenied
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: Access Denied
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 403
+            code:
+              type: number
+              description: Internal error code
+              example: 403
     ChangelogPost:
       title: Changelog Post
       description: Changelog post object
@@ -301,17 +238,80 @@ components:
           type: string
           description: Date of last update
           example: 2026-06-02T19:02:14+0000
+    ChangelogPostList:
+      title: Changelog Post List
+      description: Paginated list of changelog posts
+      type: object
+      required:
+      - posts
+      - count
+      - total
+      - cursor
+      properties:
+        posts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangelogPost'
+        count:
+          type: integer
+          description: Number of posts retrieved
+          example: 10
+        total:
+          type: integer
+          description: Total number of posts in the changelog
+          example: 42
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: Cursor for next page of results. Null value if there are no more results
+          example: XAr
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
+    UnsupportedContentType:
+      title: UnsupportedContentType
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 415
+            code:
+              type: number
+              description: Internal error code
+              example: 415
   headers:
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
     X-RateLimit-Reset:
       description: Unix timestamp at which requests consumed will reset
       schema:
         type: integer
         example: 1611530395
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
     X-RateLimit-Limit:
       description: Requests permitted until reset time
       schema:

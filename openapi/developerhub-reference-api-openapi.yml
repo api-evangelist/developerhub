@@ -219,6 +219,25 @@ paths:
       deprecated: false
 components:
   schemas:
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
     Reference:
       title: Reference
       required:
@@ -255,22 +274,6 @@ components:
           description: Numerical order in the version
           example: 1
       description: Reference object
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
     AccessDenied:
       title: AccessDenied
       type: object
@@ -290,36 +293,33 @@ components:
               type: number
               description: Internal error code
               example: 403
-    TooManyRequests:
-      title: TooManyRequests
+    Error:
+      title: Error
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
   headers:
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
     X-RateLimit-Reset:
       description: Unix timestamp at which requests consumed will reset
       schema:
         type: integer
         example: 1611530395
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
     X-RateLimit-Limit:
       description: Requests permitted until reset time
       schema:
