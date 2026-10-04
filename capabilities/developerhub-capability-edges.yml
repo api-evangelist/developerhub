@@ -1,0 +1,56 @@
+slug: developerhub
+provider: DeveloperHub
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Documentation
+  spec_file: developerhub-documentation-api-openapi.yml
+  capability_id: BC-4270.30
+  capability_id_l1: BC-4270
+  capability_name: Developer Portal Management
+  confidence: 0.8
+  evidence: 'GET /version/{id}/documentation — "Lists documentation sections in a version"; vendor: "hosted
+    developer documentation platform ... API references, user guides"'
+  reason: Manages developer documentation sections for a developer portal product, matching Developer
+    Portal Management.
+- tag: Reference
+  spec_file: developerhub-reference-api-openapi.yml
+  capability_id: BC-4270.30
+  capability_id_l1: BC-4270
+  capability_name: Developer Portal Management
+  confidence: 0.8
+  evidence: '"Adds or updates a reference specification", "Publish a reference draft"; vendor features
+    "auto-generated API documentation from OpenAPI specifications"'
+  reason: Manages the API reference specifications rendered in the docs site — documentation and interactive
+    API references for developers, which is Developer Portal Management rather than lifecycle governance
+    of the vendor's own public API.
+- tag: Page
+  spec_file: developerhub-page-api-openapi.yml
+  capability_id: BC-4270.30
+  capability_id_l1: BC-4270
+  capability_name: Developer Portal Management
+  confidence: 0.75
+  evidence: '"Create a page", "Publish a page" on a platform that provides "a complete developer portal
+    solution"'
+  reason: Operations are CRUD plus publish over documentation pages in a hosted developer-docs/portal
+    product, which realises Developer Portal Management (documentation and onboarding content). Not generic
+    CMS plumbing since the vendor's whole surface is the developer portal.
+- tag: Changelog
+  spec_file: developerhub-changelog-api-openapi.yml
+  capability_id: BC-4270.30
+  capability_id_l1: BC-4270
+  capability_name: Developer Portal Management
+  confidence: 0.7
+  evidence: POST /changelog/{id}/post — "Create a changelog post"; schema ChangelogPost
+  reason: Publishing changelog posts on a developer documentation portal — content within the developer
+    portal. Could also be read as release-note discipline, hence not higher.

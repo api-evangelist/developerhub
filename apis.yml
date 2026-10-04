@@ -204,6 +204,9 @@ apis:
   - type: OpenAPI
     url: openapi/developerhub-version-api-openapi.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/developerhub-capability-edges.yml
+    name: DeveloperHub Business Capability Map
   - type: VendorFacets
     url: vendor-facets/developerhub-vendor-facets.yml
   - type: Overlay
