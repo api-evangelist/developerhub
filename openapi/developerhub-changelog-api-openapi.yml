@@ -156,45 +156,23 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
+  headers:
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
   schemas:
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
-    AccessDenied:
-      title: AccessDenied
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Access Denied
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 403
-            code:
-              type: number
-              description: Internal error code
-              example: 403
     ChangelogPost:
       title: Changelog Post
       description: Changelog post object
@@ -238,6 +216,25 @@ components:
           type: string
           description: Date of last update
           example: 2026-06-02T19:02:14+0000
+    AccessDenied:
+      title: AccessDenied
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: Access Denied
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 403
+            code:
+              type: number
+              description: Internal error code
+              example: 403
     ChangelogPostList:
       title: Changelog Post List
       description: Paginated list of changelog posts
@@ -266,22 +263,6 @@ components:
           - 'null'
           description: Cursor for next page of results. Null value if there are no more results
           example: XAr
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
     UnsupportedContentType:
       title: UnsupportedContentType
       type: object
@@ -301,22 +282,41 @@ components:
               type: number
               description: Internal error code
               example: 415
-  headers:
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
   securitySchemes:
     Api-Key:
       type: apiKey

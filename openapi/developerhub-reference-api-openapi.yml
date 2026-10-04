@@ -219,25 +219,6 @@ paths:
       deprecated: false
 components:
   schemas:
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
     Reference:
       title: Reference
       required:
@@ -309,6 +290,25 @@ components:
           type: number
           description: Internal error code
           example: 400
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
   headers:
     X-RateLimit-Reset:
       description: Unix timestamp at which requests consumed will reset

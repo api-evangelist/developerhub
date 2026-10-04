@@ -168,9 +168,25 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
+  headers:
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
   schemas:
-    TooManyRequests:
-      title: TooManyRequests
+    AccessDenied:
+      title: AccessDenied
       type: object
       properties:
         error:
@@ -179,15 +195,15 @@ components:
             message:
               type: string
               description: Message of the error
-              example: You exceeded the rate limit
+              example: Access Denied
             httpCode:
               type: number
               description: HTTP code returned
-              example: 429
+              example: 403
             code:
               type: number
               description: Internal error code
-              example: 9
+              example: 403
     ReaderAccess:
       title: Reader Access
       description: Reader Access
@@ -218,41 +234,6 @@ components:
           - 'null'
           description: Date when revoked. Null if not revoked.
           example: 2022-03-22T20:02:15+0000
-    AccessDenied:
-      title: AccessDenied
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Access Denied
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 403
-            code:
-              type: number
-              description: Internal error code
-              example: 403
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
     UnsupportedContentType:
       title: UnsupportedContentType
       type: object
@@ -272,22 +253,41 @@ components:
               type: number
               description: Internal error code
               example: 415
-  headers:
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
   securitySchemes:
     Api-Key:
       type: apiKey

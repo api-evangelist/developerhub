@@ -283,26 +283,23 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
+  headers:
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
   schemas:
-    TooManyRequests:
-      title: TooManyRequests
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: You exceeded the rate limit
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 429
-            code:
-              type: number
-              description: Internal error code
-              example: 9
     VersionReportPage:
       title: Version Report Page
       required:
@@ -353,29 +350,6 @@ components:
         updatedBy:
           $ref: '#/components/schemas/VersionReportUser'
       description: One page's row in the version report
-    VersionReportUser:
-      title: Version Report User
-      type: object
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-          description: User ID. Null if unknown
-          example: 3609
-        email:
-          type:
-          - string
-          - 'null'
-          description: User e-mail address. Null if unknown
-          example: peter@example.com
-        name:
-          type:
-          - string
-          - 'null'
-          description: User name. Null if unknown
-          example: Peter Griffin
-      description: User attribution in a version report
     AccessDenied:
       title: AccessDenied
       type: object
@@ -395,82 +369,6 @@ components:
               type: number
               description: Internal error code
               example: 403
-    Version:
-      title: Version
-      required:
-      - id
-      - published
-      - name
-      - created
-      - updated
-      - slug
-      - ordr
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier
-          example: 4
-        published:
-          type: boolean
-          description: True if it can be viewed by readers
-          example: true
-        name:
-          type: string
-          description: Name of the version
-          example: v1.0
-        created:
-          type: string
-          description: Date of creation
-          example: 2019-03-20T19:02:14+0000
-        updated:
-          type: string
-          description: Date of last update
-          example: 2019-03-20T19:02:14+0000
-        slug:
-          type: string
-          description: Slug in the URL
-          example: developerhub.io-api
-        ordr:
-          type: integer
-          description: Numerical order in the project
-          example: 4
-      description: Version object
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
-    UnsupportedContentType:
-      title: UnsupportedContentType
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 415
-            code:
-              type: number
-              description: Internal error code
-              example: 415
     BrokenLink:
       title: Broken Link
       required:
@@ -579,22 +477,124 @@ components:
               description: Name of the documentation section or API reference the linked page belongs to. Null when not applicable.
               example: Internal Docs
       description: A broken or risky link found in a version's content
-  headers:
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
+    UnsupportedContentType:
+      title: UnsupportedContentType
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: Unsupported content-type 'form'. Supported content-type is 'application/json'.
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 415
+            code:
+              type: number
+              description: Internal error code
+              example: 415
+    VersionReportUser:
+      title: Version Report User
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          description: User ID. Null if unknown
+          example: 3609
+        email:
+          type:
+          - string
+          - 'null'
+          description: User e-mail address. Null if unknown
+          example: peter@example.com
+        name:
+          type:
+          - string
+          - 'null'
+          description: User name. Null if unknown
+          example: Peter Griffin
+      description: User attribution in a version report
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
+    Version:
+      title: Version
+      required:
+      - id
+      - published
+      - name
+      - created
+      - updated
+      - slug
+      - ordr
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+          example: 4
+        published:
+          type: boolean
+          description: True if it can be viewed by readers
+          example: true
+        name:
+          type: string
+          description: Name of the version
+          example: v1.0
+        created:
+          type: string
+          description: Date of creation
+          example: 2019-03-20T19:02:14+0000
+        updated:
+          type: string
+          description: Date of last update
+          example: 2019-03-20T19:02:14+0000
+        slug:
+          type: string
+          description: Slug in the URL
+          example: developerhub.io-api
+        ordr:
+          type: integer
+          description: Numerical order in the project
+          example: 4
+      description: Version object
+    TooManyRequests:
+      title: TooManyRequests
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: You exceeded the rate limit
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 429
+            code:
+              type: number
+              description: Internal error code
+              example: 9
   securitySchemes:
     Api-Key:
       type: apiKey

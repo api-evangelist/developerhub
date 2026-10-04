@@ -323,260 +323,6 @@ components:
               type: number
               description: Internal error code
               example: 9
-    SearchResult:
-      title: SearchResult
-      type: object
-      properties:
-        hits:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-                description: Content where hit was found
-                example: "To use project variables in an API Reference, replace all occurrences of the variable with the variable reference. For example, one definition property could be:\nversion:\n    type: string\n    description: Version of the API\n    example: \"%versions.last_version%\"\n\n\nWarning\nNote that YAML requires you to use double quotations to escape a string containing percent sign.\nKnown Limitations\n\nVariables do not work as HREFs for links.\n"
-              title:
-                description: Title of the hit. It is either the page title or the heading title for the hit if it is in a documentation page, or the name of the operation if it was in an API reference.
-                type: string
-                example: Using Project Variables in References
-              sectionType:
-                description: 'Type of section: ''doc'' for documentation or ''ref'' for reference'
-                type: string
-                example: doc
-                enum:
-                - doc
-                - ref
-              version:
-                type: string
-                example: v1.0
-                description: Name of version
-              section:
-                type: string
-                example: Support Center
-                description: Name of section
-              page:
-                type: string
-                example: Variables
-                description: Name of page
-              pageId:
-                type: number
-                example: 86444
-                description: Page ID
-              fragment:
-                type: string
-                example: using-project-variables-in-references
-                description: URL fragment
-              path:
-                type: string
-                example: /v1.0/support-center/variables#using-project-variables-in-references
-                description: Path, without the host, to direct the user to to find the content
-            required:
-            - content
-            - title
-            - sectionType
-            - version
-            - section
-            - path
-        nbHits:
-          type: integer
-          description: Number of hits retrieved
-          example: 20
-        page:
-          type: integer
-          description: Current page
-          example: 1
-        nbPages:
-          type: integer
-          description: Number of pages that can be searched for this query
-          example: 3
-        hitsPerPage:
-          type: integer
-          description: Number of hits per page
-          example: 20
-        query:
-          type: string
-          description: Query used
-          example: variables
-        basepath:
-          type: string
-          description: Basepath of the project, if any.
-          example: docs
-        host:
-          type: string
-          description: Host of the project including scheme.
-          example: https://docs.pied-piper.com
-      required:
-      - hits
-      - nbHits
-      - page
-      - nbPages
-      - hitsPerPage
-      - query
-      - basepath
-    AllProject:
-      title: AllProject
-      required:
-      - page
-      - documentation
-      - reference
-      - version
-      type: object
-      properties:
-        page:
-          type: object
-          description: A key-value dictionary mapping of page ID to page details
-          additionalProperties:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Page title
-                example: Getting Started
-              updated:
-                type: string
-                description: Date of last update
-                example: 2019-03-20T19:02:14+0000
-              documentationId:
-                type: integer
-                description: Documentation ID
-                example: 412
-              listed:
-                type: boolean
-                description: True if page is accessible for readers
-                example: true
-          example:
-            '6177':
-              title: Getting Started
-              updated: 2019-03-20T19:02:14+0000
-              documentationId: 412
-              listed: true
-        documentation:
-          type: object
-          description: A key-value dictionary mapping of documentation ID to documentation details
-          additionalProperties:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Documentation title
-                example: Getting Started
-              versionId:
-                type: integer
-                description: Version ID
-                example: 310
-          example:
-            '412':
-              title: Support Center
-              versionId: 310
-        reference:
-          type: object
-          description: A key-value dictionary mapping of reference ID to reference details
-          additionalProperties:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Reference title
-                example: Getting Started
-              versionId:
-                type: integer
-                description: Version ID
-                example: 310
-          example:
-            '917':
-              title: Support Center
-              versionId: 310
-        version:
-          type: object
-          description: A key-value dictionary mapping of version ID to version details
-          additionalProperties:
-            type: object
-            properties:
-              name:
-                type: string
-                description: Version title
-                example: Getting Started
-              published:
-                type: boolean
-                description: True if it can be viewed by readers
-                example: true
-          example:
-            '310':
-              name: v1.0
-              published: true
-      description: All resources in a project
-    AccessDenied:
-      title: AccessDenied
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            message:
-              type: string
-              description: Message of the error
-              example: Access Denied
-            httpCode:
-              type: number
-              description: HTTP code returned
-              example: 403
-            code:
-              type: number
-              description: Internal error code
-              example: 403
-    User:
-      title: User
-      required:
-      - id
-      - email
-      - role
-      - name
-      - lastActiveAt
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier
-          example: 3609
-        name:
-          type: string
-          description: User name
-          example: Peter Griffin
-        email:
-          type: string
-          description: User e-mail address
-          example: peter@example.com
-        role:
-          type: string
-          description: Role of user
-          example: ADMIN
-          enum:
-          - ADMIN
-          - PUBLISHER
-          - WRITER
-          - REVIEWER
-        lastActiveAt:
-          type: string
-          description: Date of last time user accessed DeveloperHub
-          example: 2021-03-20T19:02:14+0000
-      description: User object
-    Error:
-      title: Error
-      type: object
-      properties:
-        message:
-          type: string
-          description: Message of the error
-          example: No file provided.
-        httpCode:
-          type: number
-          description: HTTP code returned
-          example: 400
-        code:
-          type: number
-          description: Internal error code
-          example: 400
     Audit:
       type: object
       required:
@@ -669,6 +415,260 @@ components:
           type: string
           description: Cursor for next page of results. Null value if there are no more results
           example: XAr
+    AccessDenied:
+      title: AccessDenied
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              description: Message of the error
+              example: Access Denied
+            httpCode:
+              type: number
+              description: HTTP code returned
+              example: 403
+            code:
+              type: number
+              description: Internal error code
+              example: 403
+    AllProject:
+      title: AllProject
+      required:
+      - page
+      - documentation
+      - reference
+      - version
+      type: object
+      properties:
+        page:
+          type: object
+          description: A key-value dictionary mapping of page ID to page details
+          additionalProperties:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Page title
+                example: Getting Started
+              updated:
+                type: string
+                description: Date of last update
+                example: 2019-03-20T19:02:14+0000
+              documentationId:
+                type: integer
+                description: Documentation ID
+                example: 412
+              listed:
+                type: boolean
+                description: True if page is accessible for readers
+                example: true
+          example:
+            '6177':
+              title: Getting Started
+              updated: 2019-03-20T19:02:14+0000
+              documentationId: 412
+              listed: true
+        documentation:
+          type: object
+          description: A key-value dictionary mapping of documentation ID to documentation details
+          additionalProperties:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Documentation title
+                example: Getting Started
+              versionId:
+                type: integer
+                description: Version ID
+                example: 310
+          example:
+            '412':
+              title: Support Center
+              versionId: 310
+        reference:
+          type: object
+          description: A key-value dictionary mapping of reference ID to reference details
+          additionalProperties:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Reference title
+                example: Getting Started
+              versionId:
+                type: integer
+                description: Version ID
+                example: 310
+          example:
+            '917':
+              title: Support Center
+              versionId: 310
+        version:
+          type: object
+          description: A key-value dictionary mapping of version ID to version details
+          additionalProperties:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Version title
+                example: Getting Started
+              published:
+                type: boolean
+                description: True if it can be viewed by readers
+                example: true
+          example:
+            '310':
+              name: v1.0
+              published: true
+      description: All resources in a project
+    Error:
+      title: Error
+      type: object
+      properties:
+        message:
+          type: string
+          description: Message of the error
+          example: No file provided.
+        httpCode:
+          type: number
+          description: HTTP code returned
+          example: 400
+        code:
+          type: number
+          description: Internal error code
+          example: 400
+    SearchResult:
+      title: SearchResult
+      type: object
+      properties:
+        hits:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+                description: Content where hit was found
+                example: "To use project variables in an API Reference, replace all occurrences of the variable with the variable reference. For example, one definition property could be:\nversion:\n    type: string\n    description: Version of the API\n    example: \"%versions.last_version%\"\n\n\nWarning\nNote that YAML requires you to use double quotations to escape a string containing percent sign.\nKnown Limitations\n\nVariables do not work as HREFs for links.\n"
+              title:
+                description: Title of the hit. It is either the page title or the heading title for the hit if it is in a documentation page, or the name of the operation if it was in an API reference.
+                type: string
+                example: Using Project Variables in References
+              sectionType:
+                description: 'Type of section: ''doc'' for documentation or ''ref'' for reference'
+                type: string
+                example: doc
+                enum:
+                - doc
+                - ref
+              version:
+                type: string
+                example: v1.0
+                description: Name of version
+              section:
+                type: string
+                example: Support Center
+                description: Name of section
+              page:
+                type: string
+                example: Variables
+                description: Name of page
+              pageId:
+                type: number
+                example: 86444
+                description: Page ID
+              fragment:
+                type: string
+                example: using-project-variables-in-references
+                description: URL fragment
+              path:
+                type: string
+                example: /v1.0/support-center/variables#using-project-variables-in-references
+                description: Path, without the host, to direct the user to to find the content
+            required:
+            - content
+            - title
+            - sectionType
+            - version
+            - section
+            - path
+        nbHits:
+          type: integer
+          description: Number of hits retrieved
+          example: 20
+        page:
+          type: integer
+          description: Current page
+          example: 1
+        nbPages:
+          type: integer
+          description: Number of pages that can be searched for this query
+          example: 3
+        hitsPerPage:
+          type: integer
+          description: Number of hits per page
+          example: 20
+        query:
+          type: string
+          description: Query used
+          example: variables
+        basepath:
+          type: string
+          description: Basepath of the project, if any.
+          example: docs
+        host:
+          type: string
+          description: Host of the project including scheme.
+          example: https://docs.pied-piper.com
+      required:
+      - hits
+      - nbHits
+      - page
+      - nbPages
+      - hitsPerPage
+      - query
+      - basepath
+    User:
+      title: User
+      required:
+      - id
+      - email
+      - role
+      - name
+      - lastActiveAt
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier
+          example: 3609
+        name:
+          type: string
+          description: User name
+          example: Peter Griffin
+        email:
+          type: string
+          description: User e-mail address
+          example: peter@example.com
+        role:
+          type: string
+          description: Role of user
+          example: ADMIN
+          enum:
+          - ADMIN
+          - PUBLISHER
+          - WRITER
+          - REVIEWER
+        lastActiveAt:
+          type: string
+          description: Date of last time user accessed DeveloperHub
+          example: 2021-03-20T19:02:14+0000
+      description: User object
   headers:
     X-RateLimit-Reset:
       description: Unix timestamp at which requests consumed will reset
