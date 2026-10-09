@@ -132,3 +132,17 @@ safety_notes:
   as confirmation, so it cannot delete a page it has not looked up.
 - Body edits are written to a page draft and are invisible to readers until publish_page is called, but
   title and slug changes are NOT drafted and take effect immediately on published pages.
+rfc9728:
+  endpoint: https://ai.developerhub.io/mcp
+  metadata_url: https://ai.developerhub.io/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://ai.developerhub.io/
+    authorization_servers:
+    - https://ai.developerhub.io/
+    scopes_supported:
+    - editor
+    resource_name: DeveloperHub
