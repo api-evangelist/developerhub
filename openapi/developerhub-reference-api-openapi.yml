@@ -218,6 +218,22 @@ paths:
                 $ref: '#/components/schemas/TooManyRequests'
       deprecated: false
 components:
+  headers:
+    X-RateLimit-Reset:
+      description: Unix timestamp at which requests consumed will reset
+      schema:
+        type: integer
+        example: 1611530395
+    X-RateLimit-Limit:
+      description: Requests permitted until reset time
+      schema:
+        type: integer
+        example: 300
+    X-RateLimit-Remaining:
+      description: Requests consumed in current period
+      schema:
+        type: integer
+        example: 253
   schemas:
     Reference:
       title: Reference
@@ -309,22 +325,6 @@ components:
               type: number
               description: Internal error code
               example: 9
-  headers:
-    X-RateLimit-Reset:
-      description: Unix timestamp at which requests consumed will reset
-      schema:
-        type: integer
-        example: 1611530395
-    X-RateLimit-Remaining:
-      description: Requests consumed in current period
-      schema:
-        type: integer
-        example: 253
-    X-RateLimit-Limit:
-      description: Requests permitted until reset time
-      schema:
-        type: integer
-        example: 300
   securitySchemes:
     Api-Key:
       type: apiKey
