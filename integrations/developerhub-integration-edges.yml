@@ -1,21 +1,4 @@
 edges:
-- partner_name: Slack (own)
-  partner: slack
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://slack.com/marketplace/AHKG7ME3U-developerhub
-  mirror_of: slack/integrations/slack-integration-edges.yml
-  apps:
-  - DeveloperHub
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: Slack app
 - partner_name: npm registry
   partner: npm
   partner_match: register
@@ -46,6 +29,40 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/AHKG7ME3U-developerhub
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - DeveloperHub
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
+- partner_name: Zendesk (own)
+  partner: zendesk
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.zendesk.com/marketplace/apps/support/1281021/developerhub-docs/
+  mirror_of: zendesk/integrations/zendesk-integration-edges.yml
+  apps:
+  - DeveloperHub Docs
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Knowledge and Content Management
 generated: '2026-10-18'
 method: searched
 source:
@@ -59,3 +76,4 @@ checked:
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
 - slack/integrations/slack-integration-edges.yml
+- zendesk/integrations/zendesk-integration-edges.yml
