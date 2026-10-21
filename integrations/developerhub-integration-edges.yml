@@ -63,6 +63,23 @@ edges:
   detected: '2026-10-20'
   detected_by: mirror-platform-listings.py
   category: Knowledge and Content Management
+- partner_name: JetBrains (jetbrains-marketplace)
+  partner: jetbrains
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: jetbrains-marketplace
+  evidence: https://plugins.jetbrains.com/vendor/DeveloperHub
+  mirror_of: jetbrains/integrations/jetbrains-integration-edges.yml
+  apps:
+  - DeveloperHub Preview
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: IDE / developer extension marketplace listing
 generated: '2026-10-18'
 method: searched
 source:
@@ -77,3 +94,4 @@ checked:
 - https://rubygems.org/api/v1
 - slack/integrations/slack-integration-edges.yml
 - zendesk/integrations/zendesk-integration-edges.yml
+- jetbrains/integrations/jetbrains-integration-edges.yml
