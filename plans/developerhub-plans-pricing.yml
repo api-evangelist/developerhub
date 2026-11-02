@@ -1,0 +1,136 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://developerhub.io/pricing
+sources:
+- https://developerhub.io/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Plus
+published: true
+note: Documentation platform pricing; monthly/annual tiers per project plus add-ons. Enterprise is custom
+  with a stated $499/month floor.
+plan_count: 7
+currency: USD
+plans:
+- name: Free
+  price_text: $0 free, indefinitely
+  price: 0
+  currency: USD
+  period: month
+  unit: project
+  included_quota: 1 editor, 1 published version, 1 documentation section, unlimited pages and readers,
+    all four user roles
+- name: Plus
+  price_text: $ 99 /mo billed annually · $129 monthly
+  currency: USD
+  period: month
+  unit: project
+  included_quota: 5 editors, unlimited docs and API references, custom domain, AI features 1,025 credits
+    a month
+- name: Pro
+  price_text: $ 199 /mo billed annually · $229 monthly
+  currency: USD
+  period: month
+  unit: project
+  included_quota: 20 editors, everything in Plus, AI features 1,800 credits a month, AI Assistant
+- name: Enterprise
+  price_text: Custom starting at $499/month, billed annually
+  price: 499
+  currency: USD
+  period: month
+  unit: project
+  included_quota: Everything in Pro, white-labelled, SAML SSO, custom AI credits, SLA
+- name: Translation add-on
+  price_text: $25 per month per project with 50,000 words included, then $0.20 per 1,000 words.
+  currency: USD
+  period: month
+  unit: project
+  included_quota: 50,000 translated words a month
+  overage: $0.20 per 1,000 words
+- name: Five more editors add-on
+  price_text: $50 for 5 editors per month
+  price: 50
+  currency: USD
+  period: month
+  unit: 5 editors
+- name: PDF export add-on
+  price_text: $100 per month per project
+  price: 100
+  currency: USD
+  period: month
+  unit: project
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  - subscription
+  units:
+  - object
+  plans:
+  - name: Free
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Plus
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Pro
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Translation add-on
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Five more editors add-on
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: PDF export add-on
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
