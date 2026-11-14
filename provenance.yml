@@ -5,10 +5,19 @@ artifacts:
   agentic-access/developerhub-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/developerhub-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   authentication/developerhub-authentication.yml:
     method: searched
     evidence: declared in the artifact
   capabilities/developerhub-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
     method: unknown
     evidence: no authorship recorded
   changelog/developerhub-changelog.yml:
@@ -62,8 +71,14 @@ artifacts:
   conventions/developerhub-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/developerhub-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/developerhub-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/developerhub-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/developerhub-problem-types.yml:
     method: derived
@@ -80,6 +95,9 @@ artifacts:
   heartbeat/2026-11-06.yml:
     method: unknown
     evidence: no authorship recorded
+  heartbeat/2026-11-13.yml:
+    method: unknown
+    evidence: no authorship recorded
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -89,7 +107,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -153,6 +171,9 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-11-02T082323.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/developerhub-lifecycle.yml:
@@ -228,6 +249,9 @@ artifacts:
   plans/developerhub-price-estimates.yml:
     method: unknown
     evidence: no authorship recorded
+  privacy/developerhub-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/developerhub-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -266,6 +290,9 @@ artifacts:
     evidence: no authorship recorded
   sla/developerhub-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/developerhub-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   vendor-facets/developerhub-vendor-facets.yml:
     method: unknown
